@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="YiPiao&#39;Blog">
+    <title>AdaBoost入门详解 - YiPiao&#39;Blog</title>
+    <meta name="author" content="Scorpio.Lu">
+    
+    
+    
+    <meta name="description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导    Boosting提升算法AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，">
+<meta name="keywords" content="算法,机器学习">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="AdaBoost入门详解">
+<meta property="og:url" content="http://yoursite.com/2017/11/28/AdaBoost入门详解/index.html">
+<meta property="og:site_name" content="YiPiao&#39;Blog">
+<meta property="og:description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导    Boosting提升算法AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，主要思想是“三个臭皮匠顶个诸葛亮”。一般来说，找到弱学习算法要相对容易">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2017-11-29T05:28:25.077Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AdaBoost入门详解">
+<meta name="twitter:description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导    Boosting提升算法AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，主要思想是“三个臭皮匠顶个诸葛亮”。一般来说，找到弱学习算法要相对容易">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/author.jpg"/>
+    
+    
+    
+        <meta property="og:image" content="http://yoursite.com/2017/11/28/AdaBoost入门详解/cover.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://yoursite.com/2017/11/28/AdaBoost入门详解/cover.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-pz4cc6y13wt2trzqa8l3n9v0yykr0sstdaheem7qj628nhjmhp9pfawvqawz.min.css">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?935a138631b779e824651b9d5db8c919";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+    <body>
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">YiPiao&#39;Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/author.jpg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/author.jpg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">Scorpio.Lu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>愿朝九晚五浪迹天涯<br> 愿有梦为马随处可栖</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="搜索"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">搜索</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/LouisScorpio/datamining" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    post-header-cover--full"
+             style="background-image:url('/2017/11/28/AdaBoost入门详解/cover.jpg');"
+             data-behavior="4">
+            
+        </div>
+
+            <div id="main" data-behavior="4"
+                 class="hasCover
+                        hasCoverMetaOut
+                        hasCoverCaption">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+        <span class="post-header-cover-caption caption">In Ganzi.Seda</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            AdaBoost入门详解
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-11-28T16:15:23+08:00">
+	
+		    11月 28, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/机器学习算法/">机器学习算法</a>
+
+
+    
+</div>
+
+    
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2><blockquote>
+<ul>
+<li>Boosting提升算法</li>
+<li>AdaBoost</li>
+<li>　原理理解</li>
+<li>　实例</li>
+<li>　算法流程</li>
+<li>　公式推导</li>
+</ul>
+</blockquote>
+<p><br></p>
+<h2 id="Boosting提升算法"><a href="#Boosting提升算法" class="headerlink" title="Boosting提升算法"></a>Boosting提升算法</h2><p>AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，主要思想是“三个臭皮匠顶个诸葛亮”。一般来说，找到弱学习算法要相对容易一些，然后通过反复学习得到一系列弱分类器，组合这些弱分类器得到一个强分类器。Boosting算法要涉及到两个部分，加法模型和前向分步算法。加法模型就是说强分类器由一系列弱分类器线性相加而成。一般组合形式如下：</p>
+<script type="math/tex; mode=display">F_M(x;P)=\sum_{m=1}^nβ_mh(x;a_m)</script><p>其中，\(h(x;a_m)\) 就是一个个的弱分类器，\(a_m\)是弱分类器学习到的最优参数，\(β_m\)就是弱学习在强分类器中所占比重，\(P\)是所有\(a_m\)和\(β_m\)的组合。这些弱分类器线性相加组成强分类器。<br>前向分步就是说在训练过程中，下一轮迭代产生的分类器是在上一轮的基础上训练得来的。也就是可以写成这样的形式：</p>
+<script type="math/tex; mode=display">F_m (x)=F_{m-1}(x)+ β_mh_m (x;a_m)</script><p>由于采用的损失函数不同，Boosting算法也因此有了不同的类型，AdaBoost就是损失函数为指数损失的Boosting算法。</p>
+<p><br></p>
+<h2 id="AdaBoost"><a href="#AdaBoost" class="headerlink" title="AdaBoost"></a>AdaBoost</h2><h3 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h3><p>基于Boosting的理解，对于AdaBoost，我们要搞清楚两点：</p>
+<ol>
+<li>每一次迭代的弱学习\(h(x;a_m)\)有何不一样，如何学习？</li>
+<li>弱分类器权值\(β_m\)如何确定？</li>
+</ol>
+<p>对于第一个问题，AdaBoost改变了训练数据的权值，也就是样本的概率分布，其思想是将关注点放在被错误分类的样本上，减小上一轮被正确分类的样本权值，提高那些被错误分类的样本权值。然后，再根据所采用的一些基本机器学习算法进行学习，比如逻辑回归。<br>对于第二个问题，AdaBoost采用加权多数表决的方法，加大分类误差率小的弱分类器的权重，减小分类误差率大的弱分类器的权重。这个很好理解，正确率高分得好的弱分类器在强分类器中当然应该有较大的发言权。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>为了加深理解，我们来举一个例子。<br>有如下的训练样本，我们需要构建强分类器对其进行分类。x是特征，y是标签。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+</tr>
+<tr>
+<td>y</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>-1</td>
+<td>-1</td>
+<td>-1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>-1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br><br> 令权值分布\(D_1=(w_{1,1},w_{1,2},…,w_{1,10} )\),<br> 并假设一开始的权值分布是均匀分布：\(w_{1,i}=0.1，i=1,2,…,10\)<br>现在开始训练第一个弱分类器。我们发现阈值取2.5时分类误差率最低，得到弱分类器为：</p>
+<script type="math/tex; mode=display">G_1(x)= 
+\begin{cases} 
+1,& \text{x<2.5} \\
+-1,& \text{x>2.5} 
+\end{cases}</script><p>当然，也可以用别的弱分类器，只要误差率最低即可。这里为了方便，用了分段函数。得到了分类误差率\(e_1=0.3\)。<br>第二步计算\(G_1 (x)\)在强分类器中的系数\(α_1=\frac{1}{2} log\frac{ 1-e_1}{e_1}=0.4236\)，这个公式先放在这里，下面再做推导。<br>第三步更新样本的权值分布，用于下一轮迭代训练。由公式：</p>
+<script type="math/tex; mode=display">w_{2,i}=\frac{w_{1,i}}{z_1}exp⁡(-α_1 y_i G_1 (x_i ))，i=1,2,…,10</script><p>得到新的权值分布，从各0.1变成了:</p>
+<script type="math/tex; mode=display">D_2=(0.0715,0.0715,0.0715,0.0715,0.0715,0.0715,0.1666,0.1666,0.1666,0.0715)</script><p>可以看出，被分类正确的样本权值减小了，被错误分类的样本权值提高了。<br>第四步得到第一轮迭代的强分类器：</p>
+<script type="math/tex; mode=display">sign(F_1 (x))=sign(0.4236G_1 (x))</script><p>以此类推，经过第二轮……第N轮，迭代多次直至得到最终的强分类器。迭代范围可以自己定义，比如限定收敛阈值，分类误差率小于某一个值就停止迭代，比如限定迭代次数，迭代1000次停止。这里数据简单，在第3轮迭代时，得到强分类器：</p>
+<script type="math/tex; mode=display">sign(F_3 (x))=sign(0.4236G_1 (x)+0.6496G_2 (x)+0.7514G_3 (x))</script><p>的分类误差率为0，结束迭代。<br>\(F(x)=sign(F_3 (x))\)就是最终的强分类器。</p>
+<h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><p>总结一下，得到AdaBoost的算法流程：</p>
+<ul>
+<li>输入：训练数据集\(T=\{(x_1,y_1),(x_2,y_2),(x_N,y_N)\}\)，其中，\(x_i∈X⊆R^n\)，\(y_i∈Y={-1,1}\)，迭代次数\(M\)</li>
+<li>1.　初始化训练样本的权值分布:\(D_1=(w_{1,1},w_{1,2},…,w_{1,i}),w_{1,i}=\frac{1}{N},i=1,2,…,N\)。</li>
+<li>2.　对于\(m=1,2,…,M\)</li>
+<li>　　(a)　使用具有权值分布\(D_m\)的训练数据集进行学习，得到弱分类器\(G_m (x)\)</li>
+<li>　　(b)　计算\(G_m(x)\)在训练数据集上的分类误差率：<script type="math/tex; mode=display">e_m=\sum_{i=1}^Nw_{m,i}  I(G_m (x_i )≠y_i )</script></li>
+<li>　　(c)　计算\(G_m (x)\)在强分类器中所占的权重：<script type="math/tex; mode=display">α_m=\frac{1}{2}log \frac{1-e_m}{e_m}</script></li>
+<li>　　(d)　更新训练数据集的权值分布（这里，\(z_m\)是归一化因子，为了使样本的概率分布和为1）：<script type="math/tex; mode=display">w_{m+1,i}=\frac{w_{m,i}}{z_m}exp⁡(-α_m y_i G_m (x_i ))，i=1,2,…,10</script><script type="math/tex; mode=display">z_m=\sum_{i=1}^Nw_{m,i}exp⁡(-α_m y_i G_m (x_i ))</script></li>
+<li>3.　　得到最终分类器:<script type="math/tex; mode=display">F(x)=sign(\sum_{i=1}^Nα_m G_m (x))</script></li>
+</ul>
+<h3 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h3><p>现在我们来搞清楚上述公式是怎么来的。<br>假设已经经过\(m-1\)轮迭代，得到\(F_{m-1} (x)\)，根据前向分步，我们可以得到：</p>
+<script type="math/tex; mode=display">F_m (x)=F_{m-1} (x)+α_m G_m (x)</script><p>我们已经知道AdaBoost是采用指数损失，由此可以得到损失函数：</p>
+<script type="math/tex; mode=display">Loss=\sum_{i=1}^Nexp⁡(-y_i F_m (x_i ))=\sum_{i=1}^Nexp⁡(-y_i (F_{m-1} (x_i )+α_m G_m (x_i )))</script><p>这时候，\(F_{m-1}(x)\)是已知的，可以作为常量移到前面去:</p>
+<script type="math/tex; mode=display">Loss=\sum_{i=1}^N\widetilde{w_{m,i}} exp⁡(-y_i α_m G_m (x_i ))</script><p>其中，\(\widetilde{w_{m,i}}=exp⁡(-y_i (F_{m-1} (x)))\) ，敲黑板！这个就是每轮迭代的样本权重！依赖于前一轮的迭代重分配。</p>
+<p>是不是觉得还不够像？那就再化简一下：</p>
+<script type="math/tex; mode=display">\widetilde{w_{m,i}}=exp⁡(-y_i (F_{m-1} (x_i )+α_{m-1} G_{m-1} (x_i )))=\widetilde{w_{m-1,i}} exp⁡(-y_i α_{m-1} G_{m-1} (x_i ))</script><p>现在够像了吧？ok，我们继续化简Loss：</p>
+<script type="math/tex; mode=display">Loss=\sum_{y_i=G_m(x_i)}\widetilde{w_{m,i}} exp(-α_m)+\sum_{y_i≠G_m(x_i)}\widetilde{w_{m,i}} exp⁡(α_m)</script><script type="math/tex; mode=display">=\sum_{i=1}^N\widetilde{w_{m,i}}(\frac{\sum_{y_i=G_m(x_i)}\widetilde{w_{m,i}}}{\sum_{i=1}^N\widetilde{w_{m,i}}}exp(-α_m)+\frac{\sum_{y_i≠G_m(x_i)}\widetilde{w_{m,i}}}{\sum_{i=1}^N\widetilde{w_{m,i}}}exp(α_m))</script><p>公式变形之后，炒鸡激动！\(\frac{\sum_{y_i≠G_m(x_i)}\widetilde{w_{m,i}}}{\sum_{i=1}^N\widetilde{w_{m,i}}}\)这个不就是分类误差率\(e_m\)吗？？？！重写一下，</p>
+<script type="math/tex; mode=display">Loss=\sum_{i=1}^N\widetilde{w_{m,i}}exp⁡(-α_m)+e_m exp⁡(α_m))</script><p>Ok，这样我们就得到了化简之后的损失函数。接下来就是求导了。<br>对\(α_m\)求偏导，令\(\frac{∂Loss}{∂α_m }=0\)得到：</p>
+<script type="math/tex; mode=display">α_m=\frac{1}{2}log\frac{1-e_m}{e_m}</script><p>真漂亮！</p>
+<p>另外，AdaBoost的代码实战与详解请戳<a href="http://LouisScorpio.github.io/2017/11/28/%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98%E4%B9%8BAdaBoost/" target="_blank" rel="noopener">代码实战之AdaBoost</a><br><br><br><br></p>
+<p>作者 [Scorpio.Lu]<br>2017 年 11 月 28 日<br>转载请注明出处！</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/机器学习/">机器学习</a> <a class="tag tag--primary tag--small t-link" href="/tags/算法/">算法</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/28/代码实战之AdaBoost/" data-tooltip="代码实战之AdaBoost" aria-label="下一篇: 代码实战之AdaBoost">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://yoursite.com/2017/11/28/AdaBoost入门详解/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/11/28/AdaBoost入门详解/&amp;title=AdaBoost入门详解" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2017/11/28/AdaBoost入门详解/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/11/28/AdaBoost入门详解/" title="分享到 Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitment"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 Scorpio.Lu. All Rights Reserved.
+    </span>
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+ </script>
+ </br>本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/28/代码实战之AdaBoost/" data-tooltip="代码实战之AdaBoost" aria-label="下一篇: 代码实战之AdaBoost">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://yoursite.com/2017/11/28/AdaBoost入门详解/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/11/28/AdaBoost入门详解/&amp;title=AdaBoost入门详解" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2017/11/28/AdaBoost入门详解/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/11/28/AdaBoost入门详解/" title="分享到 Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#gitment">
+                         <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://yoursite.com/2017/11/28/AdaBoost入门详解/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/11/28/AdaBoost入门详解/&amp;title=AdaBoost入门详解">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2017/11/28/AdaBoost入门详解/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/11/28/AdaBoost入门详解/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>分享到 Twitter</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/author.jpg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">Scorpio.Lu</h4>
+        
+            <div id="about-card-bio"><p>愿朝九晚五浪迹天涯<br> 愿有梦为马随处可栖</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>AI Engineer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Hangzhou,China
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-peofhqjkzcghmndknakluequy1y6owxdwpaqyju9ntl9zxnk7rdolb3rjjoj.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            (function() {
+                function render() {
+                    new Gitment({
+                        id: 'http://yoursite.com/2017/11/28/AdaBoost入门详解/',
+                        owner: 'LouisScorpio',
+                        repo: 'LouisScorpio.github.io',
+                        oauth: {
+                            client_id: 'afe72370b56cee9387d8',
+                            client_secret: '5c5ed0c0616636d49e329d89959c876dec0e1a5a',
+                        }
+                    }).render('gitment');
+                }
+                var gc = document.createElement('script');
+                gc.type = 'text/javascript';
+                gc.src = '//imsun.github.io/gitment/dist/gitment.browser.js';
+                gc.charset = 'UTF-8';
+                gc.onload = render;
+                gc.async = true;
+                document.querySelector('body').appendChild(gc);
+                var gcs = document.createElement('link');
+                gcs.href = '//imsun.github.io/gitment/style/default.css';
+                gcs.type = 'text/css';
+                gcs.rel = 'stylesheet';
+                gcs.media = 'screen,print';
+                document.querySelector('head').appendChild(gcs);
+            })();
+	    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+
+
+    </body>
+</html>
