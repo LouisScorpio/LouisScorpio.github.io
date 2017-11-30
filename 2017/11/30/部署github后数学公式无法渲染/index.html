@@ -16,18 +16,18 @@
     
     
     
-    <meta name="description" content="使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！步骤如下：1、安装mathjax插件：1npm install hexo-math --save 2、在博客主目录下的_conf">
+    <meta name="description" content="使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！">
 <meta name="keywords" content="hexo">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="部署github后数学公式无法渲染">
 <meta property="og:url" content="http://yoursite.com/2017/11/30/部署github后数学公式无法渲染/index.html">
 <meta property="og:site_name" content="Scorpio.Lu|Blog">
-<meta property="og:description" content="使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！步骤如下：1、安装mathjax插件：1npm install hexo-math --save 2、在博客主目录下的_config.yml中添加：1234567math:    engine: &amp;apos;">
+<meta property="og:description" content="使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2017-11-30T04:20:38.333Z">
+<meta property="og:updated_time" content="2017-11-30T13:33:54.328Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="部署github后数学公式无法渲染">
-<meta name="twitter:description" content="使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！步骤如下：1、安装mathjax插件：1npm install hexo-math --save 2、在博客主目录下的_config.yml中添加：1234567math:    engine: &amp;apos;">
+<meta name="twitter:description" content="使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！">
     
     
         
@@ -229,7 +229,9 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p>使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……<br>网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！<br>步骤如下：<br>1、安装mathjax插件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br></pre></td></tr></table></figure></p>
+            <p>使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……<br>网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！</p>
+<a id="more"></a>
+<p>步骤如下：<br>1、安装mathjax插件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br></pre></td></tr></table></figure></p>
 <p>2、在博客主目录下的_config.yml中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">math:</span><br><span class="line">    engine: &apos;mathjax&apos;</span><br><span class="line">    mathjax:</span><br><span class="line">        src: &quot;//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><br><span class="line">        config:</span><br><span class="line">            tex2jax:</span><br><span class="line">                inlineMath: [ [&apos;$&apos;,&apos;$&apos;], [&quot;\\(&quot;,&quot;\\)&quot;] ]</span><br></pre></td></tr></table></figure></p>
 <p>3、在主题目录下的<code>.\layout\_partial\head.ejs</code>文件中<code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>的后面添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//cdn.bootcss.com&quot; /&gt;</span><br><span class="line">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//cdn.mathjax.org&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
 <p>在我用的主题下很快就渲染出来啦！！</p>
@@ -273,7 +275,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/28/代码实战之AdaBoost/" data-tooltip="代码实战之AdaBoost" aria-label="下一篇: 代码实战之AdaBoost">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/28/AdaBoost入门详解/" data-tooltip="AdaBoost入门详解" aria-label="下一篇: AdaBoost入门详解">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -283,7 +285,7 @@
     </nav>
     <ul class="post-actions post-action-share">
         <li class="post-action hide-lg hide-md hide-sm">
-            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
                 <i class="fa fa-share-alt" aria-hidden="true"></i>
             </a>
         </li>
@@ -331,7 +333,7 @@
         
         <li class="post-action">
             
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
             
                 <i class="fa fa-list" aria-hidden="true"></i>
             </a>
@@ -378,7 +380,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/28/代码实战之AdaBoost/" data-tooltip="代码实战之AdaBoost" aria-label="下一篇: 代码实战之AdaBoost">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/28/AdaBoost入门详解/" data-tooltip="AdaBoost入门详解" aria-label="下一篇: AdaBoost入门详解">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -388,7 +390,7 @@
     </nav>
     <ul class="post-actions post-action-share">
         <li class="post-action hide-lg hide-md hide-sm">
-            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
                 <i class="fa fa-share-alt" aria-hidden="true"></i>
             </a>
         </li>
@@ -436,7 +438,7 @@
         
         <li class="post-action">
             
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
             
                 <i class="fa fa-list" aria-hidden="true"></i>
             </a>

@@ -199,7 +199,7 @@
     <section class="postShorten-group main-content-wrap">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
@@ -227,33 +227,13 @@
 
             </div>
             
-                <div class="postShorten-content" itemprop="articleBody">
-                    <p>使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……<br>网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！<br>步骤如下：<br>1、安装mathjax插件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br></pre></td></tr></table></figure></p>
-<p>2、在博客主目录下的_config.yml中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">math:</span><br><span class="line">    engine: &apos;mathjax&apos;</span><br><span class="line">    mathjax:</span><br><span class="line">        src: &quot;//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><br><span class="line">        config:</span><br><span class="line">            tex2jax:</span><br><span class="line">                inlineMath: [ [&apos;$&apos;,&apos;$&apos;], [&quot;\\(&quot;,&quot;\\)&quot;] ]</span><br></pre></td></tr></table></figure></p>
-<p>3、在主题目录下的<code>.\layout\_partial\head.ejs</code>文件中<code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>的后面添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//cdn.bootcss.com&quot; /&gt;</span><br><span class="line">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//cdn.mathjax.org&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>在我用的主题下很快就渲染出来啦！！</p>
-<p>4、如果还有冲突的公式，就在公式外面套上<code>{ % math % }和{ % endmath % }</code>即可。</p>
-<p>例子：</p>
-<p>公式1：换行公式<br>$$ F_M(x;P)=\sum_{m=1}^nβ_mh(x;a_m) $$<br>书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$ F_M(x;P)=\sum_&#123;m=1&#125;^nβ_mh(x;a_m) $$</span><br></pre></td></tr></table></figure></p>
-<p>公式2：行间\(β_m\)<br>书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\\(β_m\\)</span><br></pre></td></tr></table></figure></p>
-<p>公式3：<br><span>$$G_1(x)= 
-\begin{cases} 
-1,&amp; \text{x&lt;2.5} \\
--1,&amp; \text{x&gt;2.5} 
-\end{cases}$$</span><!-- Has MathJax --></p>
-<p>书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;% math %&#125;</span><br><span class="line">G_1(x)= </span><br><span class="line">\begin&#123;cases&#125; </span><br><span class="line">1,&amp; \text&#123;x&lt;2.5&#125; \\</span><br><span class="line">-1,&amp; \text&#123;x&gt;2.5&#125; </span><br><span class="line">\end&#123;cases&#125; </span><br><span class="line">&#123;% endmath %&#125;</span><br></pre></td></tr></table></figure></p>
-<p>作者 [Scorpio.Lu]<br>2017 年 11 月 30 日<br>转载请注明出处！</p>
-
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……<br>网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！</p>
                     
+                        <a href="/2017/11/30/部署github后数学公式无法渲染/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
                         
-
-                    
-                    
-                        <p>
-                            <a href="/2017/11/30/部署github后数学公式无法渲染/#post-footer" class="postShorten-excerpt_link link">
-                                评论和共享
-                            </a>
-                        </p>
                     
                 </div>
             
@@ -328,24 +308,7 @@
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
 <script src="/assets/js/script-peofhqjkzcghmndknakluequy1y6owxdwpaqyju9ntl9zxnk7rdolb3rjjoj.min.js"></script>
-<!--SCRIPTS END--><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+<!--SCRIPTS END--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 

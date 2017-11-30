@@ -199,7 +199,7 @@
     <section class="postShorten-group main-content-wrap">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
@@ -227,151 +227,22 @@
 
             </div>
             
-                <div class="postShorten-content" itemprop="articleBody">
-                    <p>使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……<br>网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！<br>步骤如下：<br>1、安装mathjax插件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br></pre></td></tr></table></figure></p>
-<p>2、在博客主目录下的_config.yml中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">math:</span><br><span class="line">    engine: &apos;mathjax&apos;</span><br><span class="line">    mathjax:</span><br><span class="line">        src: &quot;//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><br><span class="line">        config:</span><br><span class="line">            tex2jax:</span><br><span class="line">                inlineMath: [ [&apos;$&apos;,&apos;$&apos;], [&quot;\\(&quot;,&quot;\\)&quot;] ]</span><br></pre></td></tr></table></figure></p>
-<p>3、在主题目录下的<code>.\layout\_partial\head.ejs</code>文件中<code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>的后面添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//cdn.bootcss.com&quot; /&gt;</span><br><span class="line">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//cdn.mathjax.org&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>在我用的主题下很快就渲染出来啦！！</p>
-<p>4、如果还有冲突的公式，就在公式外面套上<code>{ % math % }和{ % endmath % }</code>即可。</p>
-<p>例子：</p>
-<p>公式1：换行公式<br>$$ F_M(x;P)=\sum_{m=1}^nβ_mh(x;a_m) $$<br>书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$ F_M(x;P)=\sum_&#123;m=1&#125;^nβ_mh(x;a_m) $$</span><br></pre></td></tr></table></figure></p>
-<p>公式2：行间\(β_m\)<br>书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\\(β_m\\)</span><br></pre></td></tr></table></figure></p>
-<p>公式3：<br><span>$$G_1(x)= 
-\begin{cases} 
-1,&amp; \text{x&lt;2.5} \\
--1,&amp; \text{x&gt;2.5} 
-\end{cases}$$</span><!-- Has MathJax --></p>
-<p>书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;% math %&#125;</span><br><span class="line">G_1(x)= </span><br><span class="line">\begin&#123;cases&#125; </span><br><span class="line">1,&amp; \text&#123;x&lt;2.5&#125; \\</span><br><span class="line">-1,&amp; \text&#123;x&gt;2.5&#125; </span><br><span class="line">\end&#123;cases&#125; </span><br><span class="line">&#123;% endmath %&#125;</span><br></pre></td></tr></table></figure></p>
-<p>作者 [Scorpio.Lu]<br>2017 年 11 月 30 日<br>转载请注明出处！</p>
-
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……<br>网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！</p>
                     
-                        
-
-                    
-                    
-                        <p>
-                            <a href="/2017/11/30/部署github后数学公式无法渲染/#post-footer" class="postShorten-excerpt_link link">
-                                评论和共享
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2017/11/28/代码实战之AdaBoost/">
-                            代码实战之AdaBoost
+                        <a href="/2017/11/30/部署github后数学公式无法渲染/" class="postShorten-excerpt_link link">
+                            阅读全文
                         </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2017-11-28T16:15:23+08:00">
-	
-		    11月 28, 2017
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/categories/代码实战/">代码实战</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content" itemprop="articleBody">
-                    <blockquote>
-<ul>
-<li>初试AdaBoost</li>
-<li>　SAMME.R算法流程</li>
-<li>sklearn之AdaBoostClassifier类</li>
-<li>完整实战demo</li>
-</ul>
-</blockquote>
-<hr>
-<h2 id="初试AdaBoost"><a href="#初试AdaBoost" class="headerlink" title="初试AdaBoost"></a>初试AdaBoost</h2><p>一个简单的例子，来介绍AdaBoostClassifier。<br>例子放在<a href="https://github.com/LouisScorpio/datamining/blob/master/blog_code/src/algorithm/ml/ensemble/AdaBoostFirstTry.py" target="_blank" rel="noopener">Github</a>上，可以直接fork。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="comment">#python 3.5</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Created on 2017年11月24日</span></span><br><span class="line"><span class="string">@author: Scorpio.Lu</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">在scikit-learn库中，有AdaBoostRegression（回归）和AdaBoostClassifier（分类）两个。</span></span><br><span class="line"><span class="string">在对和AdaBoostClassifier进行调参时，主要是对两部分进行调参：1) AdaBoost框架调参；2)弱分类器调参</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#导包</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> AdaBoostClassifier  </span><br><span class="line"></span><br><span class="line"><span class="comment">#载入数据，sklearn中自带的iris数据集</span></span><br><span class="line">iris=load_iris()</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">AdaBoostClassifier参数解释</span></span><br><span class="line"><span class="string">base_estimator:弱分类器，默认是CART分类树：DecisionTressClassifier</span></span><br><span class="line"><span class="string">algorithm：在scikit-learn实现了两种AdaBoost分类算法，即SAMME和SAMME.R，</span></span><br><span class="line"><span class="string">           SAMME就是原理篇介绍到的AdaBoost算法，指Discrete AdaBoost</span></span><br><span class="line"><span class="string">           SAMME.R指Real AdaBoost，返回值不再是离散的类型，而是一个表示概率的实数值，算法流程见后文</span></span><br><span class="line"><span class="string">                            两者的主要区别是弱分类器权重的度量，SAMME使用了分类效果作为弱分类器权重，SAMME.R使用了预测概率作为弱分类器权重。</span></span><br><span class="line"><span class="string">           SAMME.R的迭代一般比SAMME快，默认算法是SAMME.R。因此，base_estimator必须使用支持概率预测的分类器。</span></span><br><span class="line"><span class="string">loss：这个只在回归中用到，不解释了</span></span><br><span class="line"><span class="string">n_estimator:最大迭代次数，默认50。在实际调参过程中，常常将n_estimator和学习率learning_rate一起考虑</span></span><br><span class="line"><span class="string">learning_rate:每个弱分类器的权重缩减系数v。f_k(x)=f_&#123;k-1&#125;*a_k*G_k(x)。较小的v意味着更多的迭代次数，默认是1，也就是v不发挥作用。</span></span><br><span class="line"><span class="string">另外的弱分类器的调参，弱分类器不同则参数不同，这里不详细叙述</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment">#构建模型</span></span><br><span class="line">clf=AdaBoostClassifier(n_estimators=<span class="number">100</span>)  <span class="comment">#弱分类器个数设为100</span></span><br><span class="line">scores=cross_val_score(clf,iris.data,iris.target)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure></p>
-<h3 id="SAMME-R算法流程"><a href="#SAMME-R算法流程" class="headerlink" title="SAMME.R算法流程"></a>SAMME.R算法流程</h3><ol>
-<li>初始化样本权值：\(w_i=1/N,i=1,2,…,N\)</li>
-<li>Repeat for \(m=1,2,…,M\):<br> 2.1. 训练一个弱分类器，得到样本的类别预测概率分布\(p_m(x)=P(y=1|x)∈[0,1]\)<br> 2.2. \(f_m(x)=\frac{1}{2}log\frac{p_m(x)}{1-p_m(x)}\)<br> 2.3. \(w_i=w_iexp[-y_if_m(x_i)]\)，同时，要进行归一化使得权重和为1</li>
-<li>得到强分类模型：\(sign{\sum_{m=1}^{M}f_m(x)}\)</li>
-</ol>
-<h2 id="AdaBoostClassifier类"><a href="#AdaBoostClassifier类" class="headerlink" title="AdaBoostClassifier类"></a>AdaBoostClassifier类</h2><p>好，现在我们来说点理论的东西。关于AdaBoostClassifier。<br>sklearn.ensemble.AdaBoostClassifier的构造函数如下：<br>AdaBoostClassifier(base_estimator=None, n_estimators=50, learning_rate=1.0, algorithm=’SAMME.R’, random_state=None)<br>各个参数已经在代码里介绍过了，这里不再叙述。有一点要注意，理论上可以选择任何一个弱分类器，不过需要有样本权重。<br>另外有方法：</p>
-<table>
-<thead>
-<tr>
-<th>Methods</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>decision_function(X)</td>
-<td>计算输入X的决策函数值</td>
-</tr>
-<tr>
-<td>fit(X,y,sample_weight)</td>
-<td>拟合损失函数，构建强预测模型</td>
-</tr>
-<tr>
-<td>get_params()</td>
-<td>获取模型参数</td>
-</tr>
-<tr>
-<td>predict_log_proba(X)</td>
-<td>计算输入X的类别log概率</td>
-</tr>
-<tr>
-<td>predict_proba(X)</td>
-<td>计算输入X的类别概率值</td>
-</tr>
-<tr>
-<td>score(X, y, sample_weight)</td>
-<td>返回给定输入样本集X的平均准确度</td>
-</tr>
-</tbody>
-</table>
-<p><br><br>另外一些方法请见官网<a href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html" target="_blank" rel="noopener">sklearn-AdaBoost</a></p>
-<h2 id="完整实战demo"><a href="#完整实战demo" class="headerlink" title="完整实战demo"></a>完整实战demo</h2><p>好了，现在再来一个完整的<a href="https://github.com/LouisScorpio/datamining/blob/master/blog_code/src/algorithm/ml/ensemble/AdaBoostDemo.py" target="_blank" rel="noopener">demo</a>，来看看AdaBoost的分类效果<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="comment">#python 3.5</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Created on 2017年11月27日</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Scorpio.Lu</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> AdaBoostClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_gaussian_quantiles</span><br><span class="line"></span><br><span class="line"><span class="comment">#用make_gaussian_quantiles生成多组多维正态分布的数据</span></span><br><span class="line"><span class="comment">#这里生成2维正态分布，设定样本数1000，协方差2</span></span><br><span class="line">x1,y1=make_gaussian_quantiles(cov=<span class="number">2.</span>, n_samples=<span class="number">200</span>, n_features=<span class="number">2</span>, n_classes=<span class="number">2</span>, shuffle=<span class="keyword">True</span>, random_state=<span class="number">1</span>)</span><br><span class="line"><span class="comment">#为了增加样本分布的复杂度，再生成一个数据分布</span></span><br><span class="line">x2,y2=make_gaussian_quantiles(mean=(<span class="number">3</span>,<span class="number">3</span>), cov=<span class="number">1.5</span>, n_samples=<span class="number">300</span>, n_features=<span class="number">2</span>, n_classes=<span class="number">2</span>, shuffle=<span class="keyword">True</span>, random_state=<span class="number">1</span>)</span><br><span class="line"><span class="comment">#合并</span></span><br><span class="line">X=np.vstack((x1,x2))</span><br><span class="line">y=np.hstack((y1,<span class="number">1</span>-y2))</span><br><span class="line"><span class="comment">#plt.scatter(X[:,0],X[:,1],c=Y)</span></span><br><span class="line"><span class="comment">#plt.show()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#设定弱分类器CART</span></span><br><span class="line">weakClassifier=DecisionTreeClassifier(max_depth=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#构建模型。</span></span><br><span class="line">clf=AdaBoostClassifier(base_estimator=weakClassifier,algorithm=<span class="string">'SAMME'</span>,n_estimators=<span class="number">300</span>,learning_rate=<span class="number">0.8</span>)</span><br><span class="line">clf.fit(X, y)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制分类效果</span></span><br><span class="line">x1_min=X[:,<span class="number">0</span>].min()<span class="number">-1</span></span><br><span class="line">x1_max=X[:,<span class="number">0</span>].max()+<span class="number">1</span></span><br><span class="line">x2_min=X[:,<span class="number">1</span>].min()<span class="number">-1</span></span><br><span class="line">x2_max=X[:,<span class="number">1</span>].max()+<span class="number">1</span></span><br><span class="line">x1_,x2_=np.meshgrid(np.arange(x1_min,x1_max,<span class="number">0.02</span>),np.arange(x2_min,x2_max,<span class="number">0.02</span>))</span><br><span class="line"></span><br><span class="line">y_=clf.predict(np.c_[x1_.ravel(),x2_.ravel()])</span><br><span class="line">y_=y_.reshape(x1_.shape)</span><br><span class="line">plt.contourf(x1_,x2_,y_,cmap=plt.cm.Paired)</span><br><span class="line">plt.scatter(X[:,<span class="number">0</span>],X[:,<span class="number">1</span>],c=y)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
-<p>训练完成后的错误率大概是0.116。分类效果图如下：<br><img src="results.png" alt="分类结果" title="分类结果"></p>
-<p>作者 [Scorpio.Lu]<br>2017 年 11 月 28 日<br>转载请注明出处！</p>
-
-                    
                         
-
-                    
-                    
-                        <p>
-                            <a href="/2017/11/28/代码实战之AdaBoost/#post-footer" class="postShorten-excerpt_link link">
-                                评论和共享
-                            </a>
-                        </p>
                     
                 </div>
             
         </div>
         
-            <a href="/2017/11/28/代码实战之AdaBoost/">
-                <div class="postShorten-thumbnailimg">
-                    <img alt="" itemprop="image" src="http://yoursite.com/2017/11/28/代码实战之AdaBoost/cover.jpg"/>
-                </div>
-            </a>
-            
-        
     </article>
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
@@ -399,11 +270,8 @@
 
             </div>
             
-                <div class="postShorten-content" itemprop="articleBody">
-                    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-<h2 id=""><a href="#" class="headerlink" title=""></a><br></h2><blockquote>
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <blockquote>
 <ul>
 <li>Boosting提升算法</li>
 <li>AdaBoost</li>
@@ -413,107 +281,11 @@
 <li>　公式推导</li>
 </ul>
 </blockquote>
-<p><br></p>
-<h2 id="Boosting提升算法"><a href="#Boosting提升算法" class="headerlink" title="Boosting提升算法"></a>Boosting提升算法</h2><p>AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，主要思想是“三个臭皮匠顶个诸葛亮”。一般来说，找到弱学习算法要相对容易一些，然后通过反复学习得到一系列弱分类器，组合这些弱分类器得到一个强分类器。Boosting算法要涉及到两个部分，加法模型和前向分步算法。加法模型就是说强分类器由一系列弱分类器线性相加而成。一般组合形式如下：</p>
-<script type="math/tex; mode=display">F_M(x;P)=\sum_{m=1}^nβ_mh(x;a_m)</script><p>其中，\(h(x;a_m)\) 就是一个个的弱分类器，\(a_m\)是弱分类器学习到的最优参数，\(β_m\)就是弱学习在强分类器中所占比重，\(P\)是所有\(a_m\)和\(β_m\)的组合。这些弱分类器线性相加组成强分类器。<br>前向分步就是说在训练过程中，下一轮迭代产生的分类器是在上一轮的基础上训练得来的。也就是可以写成这样的形式：</p>
-<script type="math/tex; mode=display">F_m (x)=F_{m-1}(x)+ β_mh_m (x;a_m)</script><p>由于采用的损失函数不同，Boosting算法也因此有了不同的类型，AdaBoost就是损失函数为指数损失的Boosting算法。</p>
-<p><br></p>
-<h2 id="AdaBoost"><a href="#AdaBoost" class="headerlink" title="AdaBoost"></a>AdaBoost</h2><h3 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h3><p>基于Boosting的理解，对于AdaBoost，我们要搞清楚两点：</p>
-<ol>
-<li>每一次迭代的弱学习\(h(x;a_m)\)有何不一样，如何学习？</li>
-<li>弱分类器权值\(β_m\)如何确定？</li>
-</ol>
-<p>对于第一个问题，AdaBoost改变了训练数据的权值，也就是样本的概率分布，其思想是将关注点放在被错误分类的样本上，减小上一轮被正确分类的样本权值，提高那些被错误分类的样本权值。然后，再根据所采用的一些基本机器学习算法进行学习，比如逻辑回归。<br>对于第二个问题，AdaBoost采用加权多数表决的方法，加大分类误差率小的弱分类器的权重，减小分类误差率大的弱分类器的权重。这个很好理解，正确率高分得好的弱分类器在强分类器中当然应该有较大的发言权。</p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>为了加深理解，我们来举一个例子。<br>有如下的训练样本，我们需要构建强分类器对其进行分类。x是特征，y是标签。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>序号</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>x</td>
-<td>0</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>5</td>
-<td>6</td>
-<td>7</td>
-<td>8</td>
-<td>9</td>
-</tr>
-<tr>
-<td>y</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>-1</td>
-<td>-1</td>
-<td>-1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>-1</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><br><br> 令权值分布\(D_1=(w_{1,1},w_{1,2},…,w_{1,10} )\),<br> 并假设一开始的权值分布是均匀分布：\(w_{1,i}=0.1，i=1,2,…,10\)<br>现在开始训练第一个弱分类器。我们发现阈值取2.5时分类误差率最低，得到弱分类器为：<br><span>$$G_1(x)= 
-\begin{cases} 
-1,&amp; \text{x&lt;2.5} \\
--1,&amp; \text{x&gt;2.5} 
-\end{cases}$$</span><!-- Has MathJax --><br>当然，也可以用别的弱分类器，只要误差率最低即可。这里为了方便，用了分段函数。得到了分类误差率\(e_1=0.3\)。<br>第二步计算\(G_1 (x)\)在强分类器中的系数\(α_1=\frac{1}{2} log\frac{ 1-e_1}{e_1}=0.4236\)，这个公式先放在这里，下面再做推导。<br>第三步更新样本的权值分布，用于下一轮迭代训练。由公式：</p>
-<script type="math/tex; mode=display">w_{2,i}=\frac{w_{1,i}}{z_1}exp⁡(-α_1 y_i G_1 (x_i ))，i=1,2,…,10</script><p>得到新的权值分布，从各0.1变成了:</p>
-<script type="math/tex; mode=display">D_2=(0.0715,0.0715,0.0715,0.0715,0.0715,0.0715,0.1666,0.1666,0.1666,0.0715)</script><p>可以看出，被分类正确的样本权值减小了，被错误分类的样本权值提高了。<br>第四步得到第一轮迭代的强分类器：</p>
-<script type="math/tex; mode=display">sign(F_1 (x))=sign(0.4236G_1 (x))</script><p>以此类推，经过第二轮……第N轮，迭代多次直至得到最终的强分类器。迭代范围可以自己定义，比如限定收敛阈值，分类误差率小于某一个值就停止迭代，比如限定迭代次数，迭代1000次停止。这里数据简单，在第3轮迭代时，得到强分类器：</p>
-<script type="math/tex; mode=display">sign(F_3 (x))=sign(0.4236G_1 (x)+0.6496G_2 (x)+0.7514G_3 (x))</script><p>的分类误差率为0，结束迭代。<br>\(F(x)=sign(F_3 (x))\)就是最终的强分类器。</p>
-<h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><p>总结一下，得到AdaBoost的算法流程：</p>
-<ul>
-<li>输入：训练数据集\(T=\{(x_1,y_1),(x_2,y_2),(x_N,y_N)\}\)，其中，\(x_i∈X⊆R^n\)，\(y_i∈Y={-1,1}\)，迭代次数\(M\)</li>
-<li>1.　初始化训练样本的权值分布:\(D_1=(w_{1,1},w_{1,2},…,w_{1,i}),w_{1,i}=\frac{1}{N},i=1,2,…,N\)。</li>
-<li>2.　对于\(m=1,2,…,M\)</li>
-<li>　　(a)　使用具有权值分布\(D_m\)的训练数据集进行学习，得到弱分类器\(G_m (x)\)</li>
-<li>　　(b)　计算\(G_m(x)\)在训练数据集上的分类误差率：<script type="math/tex; mode=display">e_m=\sum_{i=1}^Nw_{m,i}  I(G_m (x_i )≠y_i )</script></li>
-<li>　　(c)　计算\(G_m (x)\)在强分类器中所占的权重：<script type="math/tex; mode=display">α_m=\frac{1}{2}log \frac{1-e_m}{e_m}</script></li>
-<li>　　(d)　更新训练数据集的权值分布（这里，\(z_m\)是归一化因子，为了使样本的概率分布和为1）：<script type="math/tex; mode=display">w_{m+1,i}=\frac{w_{m,i}}{z_m}exp⁡(-α_m y_i G_m (x_i ))，i=1,2,…,10</script><script type="math/tex; mode=display">z_m=\sum_{i=1}^Nw_{m,i}exp⁡(-α_m y_i G_m (x_i ))</script></li>
-<li>3.　　得到最终分类器:<script type="math/tex; mode=display">F(x)=sign(\sum_{i=1}^Nα_m G_m (x))</script></li>
-</ul>
-<h3 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h3><p>现在我们来搞清楚上述公式是怎么来的。<br>假设已经经过\(m-1\)轮迭代，得到\(F_{m-1} (x)\)，根据前向分步，我们可以得到：</p>
-<script type="math/tex; mode=display">F_m (x)=F_{m-1} (x)+α_m G_m (x)</script><p>我们已经知道AdaBoost是采用指数损失，由此可以得到损失函数：</p>
-<script type="math/tex; mode=display">Loss=\sum_{i=1}^Nexp⁡(-y_i F_m (x_i ))=\sum_{i=1}^Nexp⁡(-y_i (F_{m-1} (x_i )+α_m G_m (x_i )))</script><p>这时候，\(F_{m-1}(x)\)是已知的，可以作为常量移到前面去:</p>
-<script type="math/tex; mode=display">Loss=\sum_{i=1}^N\widetilde{w_{m,i}} exp⁡(-y_i α_m G_m (x_i ))</script><p>其中，\(\widetilde{w_{m,i}}=exp⁡(-y_i (F_{m-1} (x)))\) ，敲黑板！这个就是每轮迭代的样本权重！依赖于前一轮的迭代重分配。</p>
-<p>是不是觉得还不够像？那就再化简一下：</p>
-<script type="math/tex; mode=display">\widetilde{w_{m,i}}=exp⁡(-y_i (F_{m-1} (x_i )+α_{m-1} G_{m-1} (x_i )))=\widetilde{w_{m-1,i}} exp⁡(-y_i α_{m-1} G_{m-1} (x_i ))</script><p>现在够像了吧？ok，我们继续化简Loss：</p>
-<script type="math/tex; mode=display">Loss=\sum_{y_i=G_m(x_i)}\widetilde{w_{m,i}} exp(-α_m)+\sum_{y_i≠G_m(x_i)}\widetilde{w_{m,i}} exp⁡(α_m)</script><script type="math/tex; mode=display">=\sum_{i=1}^N\widetilde{w_{m,i}}(\frac{\sum_{y_i=G_m(x_i)}\widetilde{w_{m,i}}}{\sum_{i=1}^N\widetilde{w_{m,i}}}exp(-α_m)+\frac{\sum_{y_i≠G_m(x_i)}\widetilde{w_{m,i}}}{\sum_{i=1}^N\widetilde{w_{m,i}}}exp(α_m))</script><p>公式变形之后，炒鸡激动！\(\frac{\sum_{y_i≠G_m(x_i)}\widetilde{w_{m,i}}}{\sum_{i=1}^N\widetilde{w_{m,i}}}\)这个不就是分类误差率\(e_m\)吗？？？！重写一下，</p>
-<script type="math/tex; mode=display">Loss=\sum_{i=1}^N\widetilde{w_{m,i}}exp⁡(-α_m)+e_m exp⁡(α_m))</script><p>Ok，这样我们就得到了化简之后的损失函数。接下来就是求导了。<br>对\(α_m\)求偏导，令\(\frac{∂Loss}{∂α_m }=0\)得到：</p>
-<script type="math/tex; mode=display">α_m=\frac{1}{2}log\frac{1-e_m}{e_m}</script><p>真漂亮！</p>
-<p>另外，AdaBoost的代码实战与详解请戳<a href="http://LouisScorpio.github.io/2017/11/28/%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98%E4%B9%8BAdaBoost/" target="_blank" rel="noopener">代码实战之AdaBoost</a><br><br><br><br></p>
-<p>作者 [Scorpio.Lu]<br>2017 年 11 月 28 日<br>转载请注明出处！</p>
-
                     
+                        <a href="/2017/11/28/AdaBoost入门详解/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
                         
-
-                    
-                    
-                        <p>
-                            <a href="/2017/11/28/AdaBoost入门详解/#post-footer" class="postShorten-excerpt_link link">
-                                评论和共享
-                            </a>
-                        </p>
                     
                 </div>
             
@@ -521,7 +293,65 @@
         
             <a href="/2017/11/28/AdaBoost入门详解/">
                 <div class="postShorten-thumbnailimg">
-                    <img alt="" itemprop="image" src="http://yoursite.com/2017/11/28/AdaBoost入门详解/cover.jpg"/>
+                    <img alt="" itemprop="image" src="http://yoursite.com/2017/11/28/AdaBoost入门详解/coverImage.jpg"/>
+                </div>
+            </a>
+            
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2017/11/28/代码实战之AdaBoost/">
+                            代码实战之AdaBoost
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2017-11-28T16:15:23+08:00">
+	
+		    11月 28, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/代码实战/">代码实战</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <blockquote>
+<ul>
+<li>初试AdaBoost</li>
+<li>　SAMME.R算法流程</li>
+<li>sklearn之AdaBoostClassifier类</li>
+<li>完整实战demo</li>
+</ul>
+</blockquote>
+<hr>
+                    
+                        <a href="/2017/11/28/代码实战之AdaBoost/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+            <a href="/2017/11/28/代码实战之AdaBoost/">
+                <div class="postShorten-thumbnailimg">
+                    <img alt="" itemprop="image" src="http://yoursite.com/2017/11/28/代码实战之AdaBoost/coverImage.jpg"/>
                 </div>
             </a>
             
@@ -596,24 +426,7 @@
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
 <script src="/assets/js/script-peofhqjkzcghmndknakluequy1y6owxdwpaqyju9ntl9zxnk7rdolb3rjjoj.min.js"></script>
-<!--SCRIPTS END--><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+<!--SCRIPTS END--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
