@@ -4,6 +4,9 @@
     
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <link rel="dns-prefetch" href="//cdn.mathjax.org" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="YiPiao&#39;Blog">
     <title>AdaBoost入门详解 - YiPiao&#39;Blog</title>
@@ -11,18 +14,18 @@
     
     
     
-    <meta name="description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导   $$\begin{eqnarray}\nabla\cdot\vec{E} &amp;amp;=&amp;amp; \frac{\rho}{\epsilon_0} \\\nabla\cdot\vec{B} &amp;amp;=&a">
+    <meta name="description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导    Boosting提升算法AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，">
 <meta name="keywords" content="算法,机器学习">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="AdaBoost入门详解">
 <meta property="og:url" content="http://yoursite.com/2017/11/28/AdaBoost入门详解/index.html">
 <meta property="og:site_name" content="YiPiao&#39;Blog">
-<meta property="og:description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导   $$\begin{eqnarray}\nabla\cdot\vec{E} &amp;amp;=&amp;amp; \frac{\rho}{\epsilon_0} \\\nabla\cdot\vec{B} &amp;amp;=&amp;amp; 0 \\\nabla\times\vec{E} &amp;amp;=&amp;amp; -\frac{">
+<meta property="og:description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导    Boosting提升算法AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，主要思想是“三个臭皮匠顶个诸葛亮”。一般来说，找到弱学习算法要相对容易">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2017-11-30T03:06:07.357Z">
+<meta property="og:updated_time" content="2017-11-30T03:07:38.769Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AdaBoost入门详解">
-<meta name="twitter:description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导   $$\begin{eqnarray}\nabla\cdot\vec{E} &amp;amp;=&amp;amp; \frac{\rho}{\epsilon_0} \\\nabla\cdot\vec{B} &amp;amp;=&amp;amp; 0 \\\nabla\times\vec{E} &amp;amp;=&amp;amp; -\frac{">
+<meta name="twitter:description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导    Boosting提升算法AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，主要思想是“三个臭皮匠顶个诸葛亮”。一般来说，找到弱学习算法要相对容易">
     
     
         
@@ -261,7 +264,6 @@
 <li>　公式推导</li>
 </ul>
 </blockquote>
-<p>$$<br>\begin{eqnarray}<br>\nabla\cdot\vec{E} &amp;=&amp; \frac{\rho}{\epsilon_0} \\<br>\nabla\cdot\vec{B} &amp;=&amp; 0 \\<br>\nabla\times\vec{E} &amp;=&amp; -\frac{\partial B}{\partial t} \\<br>\nabla\times\vec{B} &amp;=&amp; \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)<br>\end{eqnarray}<br>$$</p>
 <p><br></p>
 <h2 id="Boosting提升算法"><a href="#Boosting提升算法" class="headerlink" title="Boosting提升算法"></a>Boosting提升算法</h2><p>AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，主要思想是“三个臭皮匠顶个诸葛亮”。一般来说，找到弱学习算法要相对容易一些，然后通过反复学习得到一系列弱分类器，组合这些弱分类器得到一个强分类器。Boosting算法要涉及到两个部分，加法模型和前向分步算法。加法模型就是说强分类器由一系列弱分类器线性相加而成。一般组合形式如下：<br>$$ F_M(x;P)=\sum_{m=1}^nβ_mh(x;a_m) $$<br>其中，\(h(x;a_m)\) 就是一个个的弱分类器，\(a_m\)是弱分类器学习到的最优参数，\(β_m\)就是弱学习在强分类器中所占比重，\(P\)是所有\(a_m\)和\(β_m\)的组合。这些弱分类器线性相加组成强分类器。<br>前向分步就是说在训练过程中，下一轮迭代产生的分类器是在上一轮的基础上训练得来的。也就是可以写成这样的形式：<br>$$F_m (x)=F_{m-1}(x)+ β_mh_m (x;a_m)$$<br>由于采用的损失函数不同，Boosting算法也因此有了不同的类型，AdaBoost就是损失函数为指数损失的Boosting算法。</p>
 <p><br></p>
@@ -651,7 +653,7 @@
             })();
 	    </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
-  MathJax.Hub.Config("");
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]]}});
 </script>
 
 <script type="text/x-mathjax-config">
@@ -663,7 +665,7 @@
   });
 </script>
 
-<script type="text/javascript" src="custom_mathjax_source">
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
