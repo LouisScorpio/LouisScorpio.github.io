@@ -15,14 +15,14 @@
     
     
     <meta name="description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导    Boosting提升算法AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，">
-<meta name="keywords" content="算法,机器学习">
+<meta name="keywords" content="机器学习,算法">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="AdaBoost入门详解">
 <meta property="og:url" content="http://yoursite.com/2017/11/28/AdaBoost入门详解/index.html">
 <meta property="og:site_name" content="YiPiao&#39;Blog">
 <meta property="og:description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导    Boosting提升算法AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，主要思想是“三个臭皮匠顶个诸葛亮”。一般来说，找到弱学习算法要相对容易">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2017-11-30T03:07:38.769Z">
+<meta property="og:updated_time" content="2017-11-30T03:24:48.500Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AdaBoost入门详解">
 <meta name="twitter:description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导    Boosting提升算法AdaBoost是典型的Boosting算法，属于Boosting家族的一员。在说AdaBoost之前，先说说Boosting提升算法。Boosting算法是将“弱学习算法“提升为“强学习算法”的过程，主要思想是“三个臭皮匠顶个诸葛亮”。一般来说，找到弱学习算法要相对容易">
@@ -319,7 +319,11 @@
 </tr>
 </tbody>
 </table>
-<p><br><br> 令权值分布\(D_1=(w_{1,1},w_{1,2},…,w_{1,10} )\),<br> 并假设一开始的权值分布是均匀分布：\(w_{1,i}=0.1，i=1,2,…,10\)<br>现在开始训练第一个弱分类器。我们发现阈值取2.5时分类误差率最低，得到弱分类器为：<br>$$ G_1(x)=<br>\begin{cases}<br>1,&amp; \text{x<2.5} \\="" -1,&="" \text{x="">2.5}<br>\end{cases} $$<br>当然，也可以用别的弱分类器，只要误差率最低即可。这里为了方便，用了分段函数。得到了分类误差率\(e_1=0.3\)。<br>第二步计算\(G_1 (x)\)在强分类器中的系数\(α_1=\frac{1}{2} log\frac{ 1-e_1}{e_1}=0.4236\)，这个公式先放在这里，下面再做推导。<br>第三步更新样本的权值分布，用于下一轮迭代训练。由公式：<br>$$w_{2,i}=\frac{w_{1,i}}{z_1}exp⁡(-α_1 y_i G_1 (x_i ))，i=1,2,…,10$$<br>得到新的权值分布，从各0.1变成了:<br>$$D_2=(0.0715,0.0715,0.0715,0.0715,0.0715,0.0715,0.1666,0.1666,0.1666,0.0715)$$<br>可以看出，被分类正确的样本权值减小了，被错误分类的样本权值提高了。<br>第四步得到第一轮迭代的强分类器：<br>$$sign(F_1 (x))=sign(0.4236G_1 (x))$$<br>以此类推，经过第二轮……第N轮，迭代多次直至得到最终的强分类器。迭代范围可以自己定义，比如限定收敛阈值，分类误差率小于某一个值就停止迭代，比如限定迭代次数，迭代1000次停止。这里数据简单，在第3轮迭代时，得到强分类器：<br>$$sign(F_3 (x))=sign(0.4236G_1 (x)+0.6496G_2 (x)+0.7514G_3 (x))$$<br>的分类误差率为0，结束迭代。<br>\(F(x)=sign(F_3 (x))\)就是最终的强分类器。</2.5}></p>
+<p><br><br> 令权值分布\(D_1=(w_{1,1},w_{1,2},…,w_{1,10} )\),<br> 并假设一开始的权值分布是均匀分布：\(w_{1,i}=0.1，i=1,2,…,10\)<br>现在开始训练第一个弱分类器。我们发现阈值取2.5时分类误差率最低，得到弱分类器为：<br><span>$$G_1(x)= 
+\begin{cases} 
+1,&amp; \text{x&lt;2.5} \\
+-1,&amp; \text{x&gt;2.5} 
+\end{cases}$$</span><!-- Has MathJax --><br>当然，也可以用别的弱分类器，只要误差率最低即可。这里为了方便，用了分段函数。得到了分类误差率\(e_1=0.3\)。<br>第二步计算\(G_1 (x)\)在强分类器中的系数\(α_1=\frac{1}{2} log\frac{ 1-e_1}{e_1}=0.4236\)，这个公式先放在这里，下面再做推导。<br>第三步更新样本的权值分布，用于下一轮迭代训练。由公式：<br>$$w_{2,i}=\frac{w_{1,i}}{z_1}exp⁡(-α_1 y_i G_1 (x_i ))，i=1,2,…,10$$<br>得到新的权值分布，从各0.1变成了:<br>$$D_2=(0.0715,0.0715,0.0715,0.0715,0.0715,0.0715,0.1666,0.1666,0.1666,0.0715)$$<br>可以看出，被分类正确的样本权值减小了，被错误分类的样本权值提高了。<br>第四步得到第一轮迭代的强分类器：<br>$$sign(F_1 (x))=sign(0.4236G_1 (x))$$<br>以此类推，经过第二轮……第N轮，迭代多次直至得到最终的强分类器。迭代范围可以自己定义，比如限定收敛阈值，分类误差率小于某一个值就停止迭代，比如限定迭代次数，迭代1000次停止。这里数据简单，在第3轮迭代时，得到强分类器：<br>$$sign(F_3 (x))=sign(0.4236G_1 (x)+0.6496G_2 (x)+0.7514G_3 (x))$$<br>的分类误差率为0，结束迭代。<br>\(F(x)=sign(F_3 (x))\)就是最终的强分类器。</p>
 <h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><p>总结一下，得到AdaBoost的算法流程：</p>
 <ul>
 <li>输入：训练数据集\(T=\{(x_1,y_1),(x_2,y_2),(x_N,y_N)\}\)，其中，\(x_i∈X⊆R^n\)，\(y_i∈Y={-1,1}\)，迭代次数\(M\)</li>
@@ -355,7 +359,8 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--disabled">
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/28/代码实战之AdaBoost/" data-tooltip="代码实战之AdaBoost" aria-label="上一篇: 代码实战之AdaBoost">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -363,8 +368,7 @@
             </li>
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/28/代码实战之AdaBoost/" data-tooltip="代码实战之AdaBoost" aria-label="下一篇: 代码实战之AdaBoost">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -460,7 +464,8 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--disabled">
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/28/代码实战之AdaBoost/" data-tooltip="代码实战之AdaBoost" aria-label="上一篇: 代码实战之AdaBoost">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -468,8 +473,7 @@
             </li>
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/11/28/代码实战之AdaBoost/" data-tooltip="代码实战之AdaBoost" aria-label="下一篇: 代码实战之AdaBoost">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
