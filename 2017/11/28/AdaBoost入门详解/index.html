@@ -24,7 +24,7 @@
 <meta property="og:site_name" content="Scorpio.Lu|Blog">
 <meta property="og:description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2017-11-30T13:33:03.707Z">
+<meta property="og:updated_time" content="2017-12-05T05:30:19.729Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AdaBoost入门详解">
 <meta name="twitter:description" content="Boosting提升算法 AdaBoost 　原理理解 　实例 　算法流程 　公式推导">
@@ -310,8 +310,9 @@
 </ul>
 <h3 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h3><p>现在我们来搞清楚上述公式是怎么来的。<br>假设已经经过\(m-1\)轮迭代，得到\(F_{m-1} (x)\)，根据前向分步，我们可以得到：<br>$$F_m (x)=F_{m-1} (x)+α_m G_m (x)$$<br>我们已经知道AdaBoost是采用指数损失，由此可以得到损失函数：<br>$$Loss=\sum_{i=1}^Nexp⁡(-y_i F_m (x_i ))=\sum_{i=1}^Nexp⁡(-y_i (F_{m-1} (x_i )+α_m G_m (x_i )))$$<br>这时候，\(F_{m-1}(x)\)是已知的，可以作为常量移到前面去:<br>$$Loss=\sum_{i=1}^N\widetilde{w_{m,i}} exp⁡(-y_i α_m G_m (x_i ))$$<br>其中，\(\widetilde{w_{m,i}}=exp⁡(-y_i (F_{m-1} (x)))\) ，敲黑板！这个就是每轮迭代的样本权重！依赖于前一轮的迭代重分配。</p>
 <p>是不是觉得还不够像？那就再化简一下：<br>$$\widetilde{w_{m,i}}=exp⁡(-y_i (F_{m-1} (x_i )+α_{m-1} G_{m-1} (x_i )))=\widetilde{w_{m-1,i}} exp⁡(-y_i α_{m-1} G_{m-1} (x_i ))$$<br>现在够像了吧？ok，我们继续化简Loss：<br>$$Loss=\sum_{y_i=G_m(x_i)}\widetilde{w_{m,i}} exp(-α_m)+\sum_{y_i≠G_m(x_i)}\widetilde{w_{m,i}} exp⁡(α_m)$$<br>$$=\sum_{i=1}^N\widetilde{w_{m,i}}(\frac{\sum_{y_i=G_m(x_i)}\widetilde{w_{m,i}}}{\sum_{i=1}^N\widetilde{w_{m,i}}}exp(-α_m)+\frac{\sum_{y_i≠G_m(x_i)}\widetilde{w_{m,i}}}{\sum_{i=1}^N\widetilde{w_{m,i}}}exp(α_m))$$<br>公式变形之后，炒鸡激动！\(\frac{\sum_{y_i≠G_m(x_i)}\widetilde{w_{m,i}}}{\sum_{i=1}^N\widetilde{w_{m,i}}}\)这个不就是分类误差率\(e_m\)吗？？？！重写一下，<br>$$Loss=\sum_{i=1}^N\widetilde{w_{m,i}}exp⁡(-α_m)+e_m exp⁡(α_m))$$<br>Ok，这样我们就得到了化简之后的损失函数。接下来就是求导了。<br>对\(α_m\)求偏导，令\(\frac{∂Loss}{∂α_m }=0\)得到：<br>$$α_m=\frac{1}{2}log\frac{1-e_m}{e_m} $$<br>真漂亮！</p>
-<p>另外，AdaBoost的代码实战与详解请戳<a href="http://LouisScorpio.github.io/2017/11/28/%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98%E4%B9%8BAdaBoost/" target="_blank" rel="noopener">代码实战之AdaBoost</a><br><br><br><br></p>
-<p>作者 [Scorpio.Lu]<br>2017 年 11 月 28 日<br>转载请注明出处！</p>
+<p>另外，AdaBoost的代码实战与详解请戳<a href="http://LouisScorpio.github.io/2017/11/28/%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98%E4%B9%8BAdaBoost/" target="_blank" rel="noopener">代码实战之AdaBoost</a></p>
+<h2 id="关于面试"><a href="#关于面试" class="headerlink" title="关于面试"></a>关于面试</h2><p>今年8月开始找工作，参加大厂面试问到的相关问题有如下几点：<br>1、手推AdaBoost<br>2、与GBDT比较<br>3、AdaBoost几种基本机器学习算法哪个抗噪能力最强，哪个对重采样不敏感？</p>
+<p><br><br><br><br>作者 [Scorpio.Lu]<br>2017 年 11 月 28 日<br>转载请注明出处！</p>
 
             
 
