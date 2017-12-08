@@ -24,7 +24,7 @@
 <meta property="og:site_name" content="Scorpio.Lu|Blog">
 <meta property="og:description" content="使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2017-12-05T06:54:51.493Z">
+<meta property="og:updated_time" content="2017-12-08T08:30:58.941Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="部署github后数学公式无法渲染">
 <meta name="twitter:description" content="使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！">
@@ -35,6 +35,9 @@
     
         <meta property="og:image" content="http://yoursite.com/assets/images/author.jpg"/>
     
+    
+        <meta property="og:image" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1512731847737&amp;di=3e42b905792d883961901c016eaeed9a&amp;imgtype=0&amp;src=http%3A%2F%2Focphk5wc7.bkt.clouddn.com%2F17-3-30%2F19799699-file_1490864137282_6f72.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1512731847737&amp;di=3e42b905792d883961901c016eaeed9a&amp;imgtype=0&amp;src=http%3A%2F%2Focphk5wc7.bkt.clouddn.com%2F17-3-30%2F19799699-file_1490864137282_6f72.png" />
     
     
     
@@ -227,7 +230,7 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p>使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……<br>网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！</p>
+            <p>使用了mathjax插件后，数学公式在本地能够渲染，但是一旦部署到github上以后，居然失效了……失效了……网上找了很多资料，都不太行，都是在本地可以，部署就不行。尝试多次以后终于解决了！！</p>
 <a id="more"></a>
 <p>步骤如下：<br>1、安装mathjax插件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-math --save</span><br></pre></td></tr></table></figure></p>
 <p>2、在博客主目录下的_config.yml中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">math:</span><br><span class="line">    engine: &apos;mathjax&apos;</span><br><span class="line">    mathjax:</span><br><span class="line">        src: &quot;//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><br><span class="line">        config:</span><br><span class="line">            tex2jax:</span><br><span class="line">                inlineMath: [ [&apos;$&apos;,&apos;$&apos;], [&quot;\\(&quot;,&quot;\\)&quot;] ]</span><br></pre></td></tr></table></figure></p>
@@ -235,7 +238,8 @@
 <p>在我用的主题下很快就渲染出来啦！！</p>
 <p>4、如果还有冲突的公式，就在公式外面套上<code>{ % math % }和{ % endmath % }</code>即可。</p>
 <p>例子：</p>
-<p>公式1：换行公式<br>$$ F_M(x;P)=\sum_{m=1}^nβ_mh(x;a_m) $$<br>书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$ F_M(x;P)=\sum_&#123;m=1&#125;^nβ_mh(x;a_m) $$</span><br></pre></td></tr></table></figure></p>
+<p>公式1：换行公式</p>
+<script type="math/tex; mode=display">F_M(x;P)=\sum_{m=1}^nβ_mh(x;a_m)</script><p>书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$ F_M(x;P)=\sum_&#123;m=1&#125;^nβ_mh(x;a_m) $$</span><br></pre></td></tr></table></figure></p>
 <p>公式2：行间\(β_m\)<br>书写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\\(β_m\\)</span><br></pre></td></tr></table></figure></p>
 <p>公式3：<br><span>$$G_1(x)= 
 \begin{cases} 

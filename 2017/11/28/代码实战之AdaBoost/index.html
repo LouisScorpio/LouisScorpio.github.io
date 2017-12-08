@@ -16,19 +16,19 @@
     
     
     
-    <meta name="description" content="初试AdaBoost 　SAMME.R算法流程 sklearn之AdaBoostClassifier类 完整实战demo">
+    <meta name="description" content="尝试用sklearn进行adaboost实战 &amp;amp; SAMME.R算法流程">
 <meta name="keywords" content="机器学习,code,sklearn">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="代码实战之AdaBoost">
 <meta property="og:url" content="http://yoursite.com/2017/11/28/代码实战之AdaBoost/index.html">
 <meta property="og:site_name" content="Scorpio.Lu|Blog">
-<meta property="og:description" content="初试AdaBoost 　SAMME.R算法流程 sklearn之AdaBoostClassifier类 完整实战demo">
+<meta property="og:description" content="尝试用sklearn进行adaboost实战 &amp;amp; SAMME.R算法流程">
 <meta property="og:locale" content="zh-cn">
 <meta property="og:image" content="http://yoursite.com/2017/11/28/代码实战之AdaBoost/results.png">
-<meta property="og:updated_time" content="2017-11-30T15:56:02.344Z">
+<meta property="og:updated_time" content="2017-12-08T08:37:43.446Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码实战之AdaBoost">
-<meta name="twitter:description" content="初试AdaBoost 　SAMME.R算法流程 sklearn之AdaBoostClassifier类 完整实战demo">
+<meta name="twitter:description" content="尝试用sklearn进行adaboost实战 &amp;amp; SAMME.R算法流程">
 <meta name="twitter:image" content="http://yoursite.com/2017/11/28/代码实战之AdaBoost/results.png">
     
     
@@ -38,8 +38,8 @@
         <meta property="og:image" content="http://yoursite.com/assets/images/author.jpg"/>
     
     
-        <meta property="og:image" content="http://yoursite.com/2017/11/28/代码实战之AdaBoost/coverImage.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="http://yoursite.com/2017/11/28/代码实战之AdaBoost/coverImage.jpg" />
+        <meta property="og:image" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1512732237053&amp;di=682012ef90c2a2706a5d3839a1f41e9c&amp;imgtype=0&amp;src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F50da81cb39dbb6fd085ba61b0224ab18972b378e.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1512732237053&amp;di=682012ef90c2a2706a5d3839a1f41e9c&amp;imgtype=0&amp;src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F50da81cb39dbb6fd085ba61b0224ab18972b378e.jpg" />
     
     
         <meta property="og:image" content="http://yoursite.com/2017/11/28/代码实战之AdaBoost/cover.jpg"/>
@@ -245,7 +245,8 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <blockquote>
+            <p>尝试用sklearn进行adaboost实战 &amp; SAMME.R算法流程<br><a id="more"></a></p>
+<blockquote>
 <ul>
 <li>初试AdaBoost</li>
 <li>　SAMME.R算法流程</li>
@@ -254,7 +255,6 @@
 </ul>
 </blockquote>
 <hr>
-<a id="more"></a>
 <h2 id="初试AdaBoost"><a href="#初试AdaBoost" class="headerlink" title="初试AdaBoost"></a>初试AdaBoost</h2><p>一个简单的例子，来介绍AdaBoostClassifier。<br>例子放在<a href="https://github.com/LouisScorpio/datamining/blob/master/blog_code/src/algorithm/ml/ensemble/AdaBoostFirstTry.py" target="_blank" rel="noopener">Github</a>上，可以直接fork。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="comment">#python 3.5</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Created on 2017年11月24日</span></span><br><span class="line"><span class="string">@author: Scorpio.Lu</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">在scikit-learn库中，有AdaBoostRegression（回归）和AdaBoostClassifier（分类）两个。</span></span><br><span class="line"><span class="string">在对和AdaBoostClassifier进行调参时，主要是对两部分进行调参：1) AdaBoost框架调参；2)弱分类器调参</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#导包</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> AdaBoostClassifier  </span><br><span class="line"></span><br><span class="line"><span class="comment">#载入数据，sklearn中自带的iris数据集</span></span><br><span class="line">iris=load_iris()</span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">AdaBoostClassifier参数解释</span></span><br><span class="line"><span class="string">base_estimator:弱分类器，默认是CART分类树：DecisionTressClassifier</span></span><br><span class="line"><span class="string">algorithm：在scikit-learn实现了两种AdaBoost分类算法，即SAMME和SAMME.R，</span></span><br><span class="line"><span class="string">           SAMME就是原理篇介绍到的AdaBoost算法，指Discrete AdaBoost</span></span><br><span class="line"><span class="string">           SAMME.R指Real AdaBoost，返回值不再是离散的类型，而是一个表示概率的实数值，算法流程见后文</span></span><br><span class="line"><span class="string">                            两者的主要区别是弱分类器权重的度量，SAMME使用了分类效果作为弱分类器权重，SAMME.R使用了预测概率作为弱分类器权重。</span></span><br><span class="line"><span class="string">           SAMME.R的迭代一般比SAMME快，默认算法是SAMME.R。因此，base_estimator必须使用支持概率预测的分类器。</span></span><br><span class="line"><span class="string">loss：这个只在回归中用到，不解释了</span></span><br><span class="line"><span class="string">n_estimator:最大迭代次数，默认50。在实际调参过程中，常常将n_estimator和学习率learning_rate一起考虑</span></span><br><span class="line"><span class="string">learning_rate:每个弱分类器的权重缩减系数v。f_k(x)=f_&#123;k-1&#125;*a_k*G_k(x)。较小的v意味着更多的迭代次数，默认是1，也就是v不发挥作用。</span></span><br><span class="line"><span class="string">另外的弱分类器的调参，弱分类器不同则参数不同，这里不详细叙述</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment">#构建模型</span></span><br><span class="line">clf=AdaBoostClassifier(n_estimators=<span class="number">100</span>)  <span class="comment">#弱分类器个数设为100</span></span><br><span class="line">scores=cross_val_score(clf,iris.data,iris.target)</span><br><span class="line">print(scores.mean())</span><br></pre></td></tr></table></figure>
 <h3 id="SAMME-R算法流程"><a href="#SAMME-R算法流程" class="headerlink" title="SAMME.R算法流程"></a>SAMME.R算法流程</h3><p>1.初始化样本权值：$$ w_i=1/N,i=1,2,…,N $$<br>2.Repeat for $ m=1,2,…,M $:<br>2.1 训练一个弱分类器，得到样本的类别预测概率分布 \( p_m(x)=P(y=1|x)∈[0,1] \)<br>2.2 \(f_m(x)=\frac{1}{2}log\frac{p_m(x)}{1-p_m(x)}\)<br>2.3 \(w_i=w_iexp[-y_if_m(x_i)]\)，同时，要进行归一化使得权重和为1<br>3.得到强分类模型：\(sign{\sum_{m=1}^{M}f_m(x)}\)</p>
