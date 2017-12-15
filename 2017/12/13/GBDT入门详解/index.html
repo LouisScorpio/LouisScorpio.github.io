@@ -192,6 +192,15 @@
                     </a>
             </li>
             
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="http://www.mafengwo.cn/u/46556780.html" target="_blank" rel="noopener" title="马蜂窝">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bicycle" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">马蜂窝</span>
+                    </a>
+            </li>
+            
         </ul>
         
     </div>
@@ -239,11 +248,23 @@
 <li>面经</li>
 </ul>
 </blockquote>
-<h2 id="提升树"><a href="#提升树" class="headerlink" title="提升树"></a>提升树</h2><p>在说GBDT之前，先说说提升树（boosting tree）。说到提升（boosting），总是绕不过AdaBoost。<br>AdaBoost是利用前一轮迭代的误差率来更新训练集的权重，校正前一轮迭代被错误分类的样本，通俗一点的理解就是将重心放在分错的样本上。提升树也是boosting家族的成员，意味着提升树也采用加法模型（基学习器线性组合）和前向分步算法。<br>下面一个一个进行解释，提升树的基学习器是什么，加法模型和前向分步算法又是怎么用的。<br>提升树通常以决策树作为基学习器，对分类问题决策树是二叉分类树，回归问题就是二叉回归树。<br>加法模型，就是说提升树可以表示为以下形式：这里我们约定 $ T(x;Θ_m ) $表示第m棵决策树；$ Θ_m $表示决策树的参数；$ M $为树的个数。强分类器$f_M (x)$可以由多个弱分类器$T(x;Θ_m )$线性相加而成。<br>$$f_M (x)=\sum_{m=1}^MT(x;Θ_m ) $$<br>提升树的前向分步算法。第m步的模型可以写成：<br>$$f_m (x)=f_{m-1} (x)+ T(x;Θ_m )$$<br>然后得到损失函数<br>$$L(f_m (x),y)=L(f_{m-1} (x)+ T(x;Θ_m ),y)$$<br>迭代的目的是构建$T(x;Θ_m )$，使得本轮损失$L(f_m (x),y)$最小。思想其实并不复杂，但是问题也很明显，对于不同的任务会有不同的损失函数，当损失函数是平方损失和指数损失函数时，每一步的优化还是简单的。但是对于一般损失函数而言，每一步的优化并不容易。</p>
+<h2 id="提升树"><a href="#提升树" class="headerlink" title="提升树"></a>提升树</h2><p>在说GBDT之前，先说说提升树（boosting tree）。说到提升（boosting），总是绕不过AdaBoost。<br>AdaBoost是利用前一轮迭代的误差率来更新训练集的权重，校正前一轮迭代被错误分类的样本，通俗一点的理解就是将重心放在分错的样本上。提升树也是boosting家族的成员，意味着提升树也采用加法模型（基学习器线性组合）和前向分步算法。<br>下面一个一个进行解释，提升树的基学习器是什么，加法模型和前向分步算法又是怎么用的。<br>提升树通常以决策树作为基学习器，对分类问题决策树是二叉分类树，回归问题就是二叉回归树。<br>加法模型，就是说提升树可以表示为以下形式：这里我们约定 $ T(x;Θ_m ) $表示第m棵决策树；$ Θ_m $表示决策树的参数；$ M $为树的个数。强分类器$f_M (x)$可以由多个弱分类器$T(x;Θ_m )$线性相加而成。</p>
+<script type="math/tex; mode=display">f_M (x)=\sum_{m=1}^MT(x;Θ_m )</script><p>提升树的前向分步算法。第m步的模型可以写成：</p>
+<script type="math/tex; mode=display">f_m (x)=f_{m-1} (x)+ T(x;Θ_m )</script><p>然后得到损失函数</p>
+<script type="math/tex; mode=display">L(f_m (x),y)=L(f_{m-1} (x)+ T(x;Θ_m ),y)</script><p>迭代的目的是构建$T(x;Θ_m )$，使得本轮损失$L(f_m (x),y)$最小。思想其实并不复杂，但是问题也很明显，对于不同的任务会有不同的损失函数，当损失函数是平方损失和指数损失函数时，每一步的优化还是简单的。但是对于一般损失函数而言，每一步的优化并不容易。</p>
 <h2 id="梯度提升树"><a href="#梯度提升树" class="headerlink" title="梯度提升树"></a>梯度提升树</h2><p>下面关于GBDT的理解来自论文<a href="https://github.com/LouisScorpio/datamining/tree/master/papers" target="_blank" rel="noopener">greedy function approximation: a gradient boosting machine</a></p>
 <p>1、损失函数的数值优化可以看成是在函数空间，而不是在参数空间。<br>2、损失函数$L(y,F)$包含平方损失$(y-F)^2$，绝对值损失$|y-F|$用于回归问题，负二项对数似然$log⁡(1+e^{-2yF} )$,y∈{-1,1}用于分类。<br>3、关注点是预测函数的加性扩展。</p>
-<p>最关键的点在于损失函数的数值优化可以看成是在函数空间而不是参数空间。怎么理解呢？<br>首先，我们已经知道强分类器是由多个弱分类器线性相加而成，那么可以写成如下形式：<br>$$F(x;\{β_m,a_m \}_1^M )=\sum_{m=1}^Mβ_m h(x;a_m )$$<br>这里的$h(x;a_m )$指代回归树，例如CART。$a_m$是模型参数，这里指代每个节点的分裂特征（变量），最佳分割点，节点的预测值。$M$就是有多少个弱分类器。<br>然后，我们来回顾一下参数空间的数值优化。假设预测函数为$F(x;P)$，那么损失函数就可以写成：<br>$$ ϕ(P)=L(y,F(x,P))$$<br>优化以后得到的参数最优解为：<br>$$P^~=argmin_P ϕ(P) $$<br>回想一下SGD（随机梯度下降）的优化方式，从山顶上选择梯度下降最快的方向挪动最优步长。我们是不是可以把最优参数表达成这个形式？<br>$$P^~=\sum_{m=0}^Mp_m $$<br>$$p_m=-ρ_m g_m$$<br>从初始值$p_0$开始，$m$对应每一步更新迭代，负梯度$-g_m$就是最速下降方向，$ρ_m$就是在这个最速下降方向上进行线搜索得到的最优步长。<br>好了，现在我们说说函数空间的优化方法。<br>将预测函数$F(x)$对应参数$P$，最优解变成了：<br>$$F(x)=\sum_{m=0}^Mf_m (x)$$<br>相当于在函数空间上作梯度下降。每一步梯度下降：<br>$$f_m(x)=-ρ_m g_m(x)$$<br>$$g_m (x)=[\frac{-∂ϕ(F(x))}{∂F(x)}  ]_{F(x)=F_{m-1} (x) }$$<br>$$F_{m-1}(x)=\sum_{i=0}^{m-1}f_i(x)$$<br>现在把这个思想代入到gradient boosting，我们之前已经得到预测函数为：<br>$$F(x;\{β_m,a_m \}_1^M )=\sum_{m=1}^Mβ_m h(x;a_m ) $$<br>需要做的事情是得到预测函数的最优解，就是：<br>$$\{\textbf{β}_m, \textbf{a}_m \}_1^M= argmin_{\{β_m,a_m\}_1^M} L(y,\sum_{m=1}^Mβ_m h(x;a_m ))= argmin_{β_m,a_m} L(y,F_{m-1} (x)+β_mh_m (x;a_m))$$<br>已知最速梯度下降方向为$g_m (x)=[\frac{-∂ϕ(F(x))}{∂F(x) }]_{F(x)=F_{m-1} (x) }$，每一个$h_m (x;a_m)$都建立在最速梯度下降的方向，我们可以得到：<br>$$\textbf{a}_m=argmin_{β_m,a_m} [-g_m (x)-β_mh_m (x;a_m) ]^2$$<br>可以认为是用$h_m (x;a)$去拟合伪标签$\tilde{y}=-g_m (x)$。这里为什么用最小二乘，我的理解是GBDT构造的树全是回归树，因此用最小二乘。<br>然后进行线搜索确定最优步长$ρ_m$：<br>$$\textbf{ρ}_m= argmin_{ρ_m} L(y,F_{m-1}(x)+ρ_mh_m (x;\textbf{a}_m))$$<br>$$F_m (x)=F_{m-1} (x)+ \textbf{ρ}_m h_m (x;\textbf{a}_m) $$</p>
-<p>ok,现在来整理整个算法流程：</p>
+<p>最关键的点在于损失函数的数值优化可以看成是在函数空间而不是参数空间。怎么理解呢？<br>首先，我们已经知道强分类器是由多个弱分类器线性相加而成，那么可以写成如下形式：</p>
+<script type="math/tex; mode=display">F(x;\{β_m,a_m \}_1^M )=\sum_{m=1}^Mβ_m h(x;a_m )</script><p>这里的$h(x;a_m )$指代回归树，例如CART。$a_m$是模型参数，这里指代每个节点的分裂特征（变量），最佳分割点，节点的预测值。$M$就是有多少个弱分类器。<br>然后，我们来回顾一下参数空间的数值优化。假设预测函数为$F(x;P)$，那么损失函数就可以写成：</p>
+<script type="math/tex; mode=display">ϕ(P)=L(y,F(x,P))</script><p>优化以后得到的参数最优解为：</p>
+<script type="math/tex; mode=display">P^~=argmin_P ϕ(P)</script><p>回想一下SGD（随机梯度下降）的优化方式，从山顶上选择梯度下降最快的方向挪动最优步长。我们是不是可以把最优参数表达成这个形式？</p>
+<script type="math/tex; mode=display">P^~=\sum_{m=0}^Mp_m</script><script type="math/tex; mode=display">p_m=-ρ_m g_m</script><p>从初始值$p_0$开始，$m$对应每一步更新迭代，负梯度$-g_m$就是最速下降方向，$ρ_m$就是在这个最速下降方向上进行线搜索得到的最优步长。<br>好了，现在我们说说函数空间的优化方法。<br>将预测函数$F(x)$对应参数$P$，最优解变成了：</p>
+<script type="math/tex; mode=display">F(x)=\sum_{m=0}^Mf_m (x)</script><p>相当于在函数空间上作梯度下降。每一步梯度下降：</p>
+<script type="math/tex; mode=display">f_m(x)=-ρ_m g_m(x)</script><script type="math/tex; mode=display">g_m (x)=[\frac{-∂ϕ(F(x))}{∂F(x)}  ]_{F(x)=F_{m-1} (x) }</script><script type="math/tex; mode=display">F_{m-1}(x)=\sum_{i=0}^{m-1}f_i(x)</script><p>现在把这个思想代入到gradient boosting，我们之前已经得到预测函数为：</p>
+<script type="math/tex; mode=display">F(x;\{β_m,a_m \}_1^M )=\sum_{m=1}^Mβ_m h(x;a_m )</script><p>需要做的事情是得到预测函数的最优解，就是：</p>
+<script type="math/tex; mode=display">\{\textbf{β}_m, \textbf{a}_m \}_1^M= argmin_{\{β_m,a_m\}_1^M} L(y,\sum_{m=1}^Mβ_m h(x;a_m ))= argmin_{β_m,a_m} L(y,F_{m-1} (x)+β_mh_m (x;a_m))</script><p>已知最速梯度下降方向为$g_m (x)=[\frac{-∂ϕ(F(x))}{∂F(x) }]_{F(x)=F_{m-1} (x) }$，每一个$h_m (x;a_m)$都建立在最速梯度下降的方向，我们可以得到：</p>
+<script type="math/tex; mode=display">\textbf{a}_m=argmin_{β_m,a_m} [-g_m (x)-β_mh_m (x;a_m) ]^2</script><p>可以认为是用$h_m (x;a)$去拟合伪标签$\tilde{y}=-g_m (x)$。这里为什么用最小二乘，我的理解是GBDT构造的树全是回归树，因此用最小二乘。<br>然后进行线搜索确定最优步长$ρ_m$：</p>
+<script type="math/tex; mode=display">\textbf{ρ}_m= argmin_{ρ_m} L(y,F_{m-1}(x)+ρ_mh_m (x;\textbf{a}_m))</script><script type="math/tex; mode=display">F_m (x)=F_{m-1} (x)+ \textbf{ρ}_m h_m (x;\textbf{a}_m)</script><p>ok,现在来整理整个算法流程：</p>
 <ul>
 <li>1.　初始化：$F_0 (x)=argmix_ρ\sum_{i=1}^NL(y_i,ρ)$ ,$N$表示样本量</li>
 <li>2.　For $m=1$ to $M$ do：</li>
@@ -253,23 +274,36 @@
 <li>　　(d)　$F_m (x)=F_{m-1} (x)+\textbf{ρ}_m h_m (x;\textbf{a}_m)$ </li>
 <li>3.　end for </li>
 </ul>
-<h2 id="回归提升树"><a href="#回归提升树" class="headerlink" title="回归提升树"></a>回归提升树</h2><p>当基学习器$h(x;a)$是一个包含J个节点的回归树时，可以写成：<br>$$h(x;a)=h(x;\{c_j,R_j\}_1^J)=\sum_{j=1}^Jc_jI(X∈R_j)$$<br>写完公式发现原来可以写的这么复杂，简单点说就是，对于回归树$h$，如果$x$被归到某个叶子节点$R_j$，那么$x$在这个$h$中得到的预测值就是叶子节点$R_j$的值$c_j$。一般用叶子节点上 $\{x_i∈R_j \}_1^J$的$\{\tilde{y}_i\}_1^J$平均值近似节点$R_j$的值：<br>$$c_j=ave_{x_i∈R_j}\tilde{y}_i $$<br>$\{R_j\}_1^J$是不相交的区域，集合覆盖预测值的空间。$\{c_j\}_1^J$可以认为是回归树$h$的系数。什么意思？我们回想一下线性回归，预测函数是$θ^T x$，这个$θ$就是模型系数。同样的，也可以这么理解$\{c_j\}_1^J$，是回归树$h$的系数。<br>ok，现在我们已经得到了回归提升树的预测函数：<br>$$F_m (x)=F_{m-1} (x)+ρ_m \sum_{j=1}^Jc_{m,j}I(x∈R_j)$$<br>令$γ_{m,j}=ρ_mc_{m,j}$，这个值是叶子节点的最理想的常数更新值，也可以认为兼顾了下降方向和下降步长。</p>
+<h2 id="回归提升树"><a href="#回归提升树" class="headerlink" title="回归提升树"></a>回归提升树</h2><p>当基学习器$h(x;a)$是一个包含J个节点的回归树时，可以写成：</p>
+<script type="math/tex; mode=display">h(x;a)=h(x;\{c_j,R_j\}_1^J)=\sum_{j=1}^Jc_jI(X∈R_j)</script><p>写完公式发现原来可以写的这么复杂，简单点说就是，对于回归树$h$，如果$x$被归到某个叶子节点$R_j$，那么$x$在这个$h$中得到的预测值就是叶子节点$R_j$的值$c_j$。一般用叶子节点上 $\{x_i∈R_j \}_1^J$的$\{\tilde{y}_i\}_1^J$平均值近似节点$R_j$的值：</p>
+<script type="math/tex; mode=display">c_j=ave_{x_i∈R_j}\tilde{y}_i</script><p>$\{R_j\}_1^J$是不相交的区域，集合覆盖预测值的空间。$\{c_j\}_1^J$可以认为是回归树$h$的系数。什么意思？我们回想一下线性回归，预测函数是$θ^T x$，这个$θ$就是模型系数。同样的，也可以这么理解$\{c_j\}_1^J$，是回归树$h$的系数。<br>ok，现在我们已经得到了回归提升树的预测函数：</p>
+<script type="math/tex; mode=display">F_m (x)=F_{m-1} (x)+ρ_m \sum_{j=1}^Jc_{m,j}I(x∈R_j)</script><p>令$γ_{m,j}=ρ_mc_{m,j}$，这个值是叶子节点的最理想的常数更新值，也可以认为兼顾了下降方向和下降步长。</p>
 <p>综上，整理一下回归提升树的整个算法流程：</p>
 <ul>
 <li>输入：训练数据集$T=\{(x_1,y_1),(x_2,y_2),……,(x_N,y_N)\}$，迭代次数$M$</li>
 <li>1.　初始化：$F_0 (x)=argmin_ρ\sum_{i=1}^NL(y,ρ)$ ,$N$表示样本量</li>
 <li>2.　For $m=1$ to $M$ do：</li>
-<li>　　(a)　计算损失函数在当前模型$F_{m-1} (x)$的负梯度值：<br>$$\tilde{y}=-[\frac{∂ϕ(F(x))}{∂F(x)}]_{F(x)=F_{m-1}(x) }=y_i-F_{m-1}(x_i)，i=1,2,……,N$$</li>
+<li>　　(a)　计算损失函数在当前模型$F_{m-1} (x)$的负梯度值：<script type="math/tex; mode=display">\tilde{y}=-[\frac{∂ϕ(F(x))}{∂F(x)}]_{F(x)=F_{m-1}(x) }=y_i-F_{m-1}(x_i)，i=1,2,……,N</script></li>
 <li>　　(b)　根据$\tilde{y}_i$学习得到了第$m$棵回归树，对应的叶节点区域为$\{R_j \}_1^J$</li>
 <li>　　(c)　$γ_{m,j}=argmin_γ\sum_{x_i∈R_{m,j}}L(y_i,F_{m-1}(x_i)+γ)$</li>
-<li>　　(d)　得到本轮最佳拟合决策树为：<br>$$h_m(x;a)=\sum_{j=1}^Jγ_{m,j}I(x∈R_{m,j})$$</li>
-<li>　　(e)　得到本次迭代得到的强学习器:<br>$$F_m(x)=F_{m-1}(x)+\sum_{j=1}^Jγ_{m,j}I(x∈R_{m,j})$$</li>
-<li>3.　结束迭代之后的强学习器为:<br>　　　　$$F_M(x)=\sum_{m=1}^M\sum_{j=1}^Jγ_{m,j}I(x∈R_{m,j})$$</li>
+<li>　　(d)　得到本轮最佳拟合决策树为：<script type="math/tex; mode=display">h_m(x;a)=\sum_{j=1}^Jγ_{m,j}I(x∈R_{m,j})</script></li>
+<li>　　(e)　得到本次迭代得到的强学习器:<script type="math/tex; mode=display">F_m(x)=F_{m-1}(x)+\sum_{j=1}^Jγ_{m,j}I(x∈R_{m,j})</script></li>
+<li>3.　结束迭代之后的强学习器为:<br>　　　　<script type="math/tex">F_M(x)=\sum_{m=1}^M\sum_{j=1}^Jγ_{m,j}I(x∈R_{m,j})</script></li>
 </ul>
-<p>当当当~看到第3点，我们发现损失函数在当前模型$F_{m-1}(x)$的负梯度值刚刚好是$y-F_{m-1}(x)$，也就是我们常说的残差！看到这里有没有很激动？这不就是我们常说的GBDT是在拟合前几轮迭代的残差吗？<br>下面给出证明：<br>令当前的预测函数模型为$F_{m-1}(x)$，下一棵要学习的回归树为$h_m (x;a)$，则下一步要学习的预测函数为：<br>$$F_m(x)=F_{m-1}(x)+h_m(x;a_m)$$<br>回归提升树的损失函数为平方损失：<br>$$Loss=L(F_m(x),y)=\frac{1}{2}(F_m(x)-y)^2$$<br>对$F_m (x)$求关于$a_m$的偏导：<br>$$\frac{∂Loss}{∂a_m}=(F_m(x)-y)=F_{m-1}(x)+h_m(x;a_m)-y$$<br>我们要使经验风险极小化，令偏导为0：<br>$$h_m(x;a_m)=y-F_{m-1}(x)$$<br>也就是说，构建的回归树要去拟合前面的残差，得证。可以这么理解，GBDT是在函数空间的梯度下降求最优值，当损失函数为平方损失时，恰好去拟合了残差。<br>下面给一个简单的例子方便理解，现在要通过购物金额和上网时长来预测年龄。假设有5个训练样本，标签分别14,17,13,25,27。第m轮迭代，通过前几轮的残差构建决策树，得到预测函数$F_m (x)$的预测年龄分别为16,15,12,19,29，计算残差-2,2,1,6,-2。第m+1轮迭代，就去学习这个残差，通俗一点说就是以残差作为第i+1轮迭代构建决策树的标签。</p>
-<h2 id="二元分类"><a href="#二元分类" class="headerlink" title="二元分类"></a>二元分类</h2><p>我们使用负二项对数似然作为损失函数：<br>$$L(y,F)=log(1+exp(-2yF)),y∈\{1,1\}$$<br>其中，$F(x)=\frac{1}{2}log[\frac{P(y=1|x)}{P(y=-1|x)}]$<br>看这个公式有没有很熟悉？是的，这个负二项对数似然可以推到逻辑回归的损失函数。<br>我们知道逻辑回归的预测函数为:<br>$$P(y=1|x)=\frac{1}{1+exp(-θ^Tx)},y∈\{0,1\}$$<br>我们知道这里的负样本y=-1对应于逻辑回归里的负样本y=0，所以有：<br>$$F(x)=\frac{1}{2}log[\frac{P(y=1|x)}{P(y=-1|x)}]=\frac{1}{2}log[\frac{P(y=1|x)}{P(y=0|x)}]=\frac{1}{2}θ^Tx$$<br>将上式代入$L(y,F)$，可得$L(y,F)=log(1+exp(-2yF))=log(1+exp(-yθ^Tx)),y∈\{-1,1\}$<br>当y=1时，$L(y,F)= log⁡(1+exp⁡(-θ^T x))=y log⁡(1+exp⁡(-θ^T x) )=ylog(P(y=1|x))$<br>当y=-1时，$L(y,F)=log⁡(1+exp⁡(θ^T x) )=log⁡(1-P(y=1|x))$<br>令$y$←0，$L(y,F)=(1-y)log(1-P(y=1|x))$<br>结合在一起，可以写成：<br>$$L(y,F)=ylog(P(y=1|x))+(1-y)log(1-P(y=1|x))，y∈\{0,1\}$$<br>与逻辑回归损失函数一致，得证。</p>
-<p>预测函数$F_{m-1} (x)$的当前负梯度值，也可以说是伪响应$\tilde{y}$为：<br>$$\tilde{y}=-[\frac{∂L(F(x),y)}{∂F(x)}]_{F(x)=F_{m-1}(x)}=\frac{2y}{1+exp(2yF_{m-1}(x))}$$<br>我们仍然将回归树作为基学习器，进行线搜索得到最优叶子节点值：<br>$$γ_{m,j}=argmin_y\sum_{x∈R_{m,j}}log(1+(-2y(F_{m-1}(x)+γ)))$$<br>一看这个公式就知道计算量不是一般的大，我们用<a href="https://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF%E6%B3%95" target="_blank" rel="noopener">Newton-Raphson近似</a>，得到:<br>$$γ_{m,j}=\frac{\sum_{x∈R_{m,j}}\tilde{y}_i}{\sum_{x∈R_{m,j}}|\tilde{y}_i|(2-|\tilde{y}|)}$$</p>
-<p>总结一下算法流程如下：</p>
+<p>当当当~看到第3点，我们发现损失函数在当前模型$F_{m-1}(x)$的负梯度值刚刚好是$y-F_{m-1}(x)$，也就是我们常说的残差！看到这里有没有很激动？这不就是我们常说的GBDT是在拟合前几轮迭代的残差吗？<br>下面给出证明：<br>令当前的预测函数模型为$F_{m-1}(x)$，下一棵要学习的回归树为$h_m (x;a)$，则下一步要学习的预测函数为：</p>
+<script type="math/tex; mode=display">F_m(x)=F_{m-1}(x)+h_m(x;a_m)</script><p>回归提升树的损失函数为平方损失：</p>
+<script type="math/tex; mode=display">Loss=L(F_m(x),y)=\frac{1}{2}(F_m(x)-y)^2</script><p>对$F_m (x)$求关于$a_m$的偏导：</p>
+<script type="math/tex; mode=display">\frac{∂Loss}{∂a_m}=(F_m(x)-y)=F_{m-1}(x)+h_m(x;a_m)-y</script><p>我们要使经验风险极小化，令偏导为0：</p>
+<script type="math/tex; mode=display">h_m(x;a_m)=y-F_{m-1}(x)</script><p>也就是说，构建的回归树要去拟合前面的残差，得证。可以这么理解，GBDT是在函数空间的梯度下降求最优值，当损失函数为平方损失时，恰好去拟合了残差。<br>下面给一个简单的例子方便理解，现在要通过购物金额和上网时长来预测年龄。假设有5个训练样本，标签分别14,17,13,25,27。第m轮迭代，通过前几轮的残差构建决策树，得到预测函数$F_m (x)$的预测年龄分别为16,15,12,19,29，计算残差-2,2,1,6,-2。第m+1轮迭代，就去学习这个残差，通俗一点说就是以残差作为第i+1轮迭代构建决策树的标签。</p>
+<h2 id="二元分类"><a href="#二元分类" class="headerlink" title="二元分类"></a>二元分类</h2><p>我们使用负二项对数似然作为损失函数：</p>
+<script type="math/tex; mode=display">L(y,F)=log(1+exp(-2yF)),y∈\{1,1\}</script><p>其中，$F(x)=\frac{1}{2}log[\frac{P(y=1|x)}{P(y=-1|x)}]$<br>看这个公式有没有很熟悉？是的，这个负二项对数似然可以推到逻辑回归的损失函数。<br>我们知道逻辑回归的预测函数为:</p>
+<script type="math/tex; mode=display">P(y=1|x)=\frac{1}{1+exp(-θ^Tx)},y∈\{0,1\}</script><p>我们知道这里的负样本y=-1对应于逻辑回归里的负样本y=0，所以有：</p>
+<script type="math/tex; mode=display">F(x)=\frac{1}{2}log[\frac{P(y=1|x)}{P(y=-1|x)}]=\frac{1}{2}log[\frac{P(y=1|x)}{P(y=0|x)}]=\frac{1}{2}θ^Tx</script><p>将上式代入$L(y,F)$，可得$L(y,F)=log(1+exp(-2yF))=log(1+exp(-yθ^Tx)),y∈\{-1,1\}$<br>当y=1时，$L(y,F)= log⁡(1+exp⁡(-θ^T x))=y log⁡(1+exp⁡(-θ^T x) )=ylog(P(y=1|x))$<br>当y=-1时，$L(y,F)=log⁡(1+exp⁡(θ^T x) )=log⁡(1-P(y=1|x))$<br>令$y$←0，$L(y,F)=(1-y)log(1-P(y=1|x))$<br>结合在一起，可以写成：</p>
+<script type="math/tex; mode=display">L(y,F)=ylog(P(y=1|x))+(1-y)log(1-P(y=1|x))，y∈\{0,1\}</script><p>与逻辑回归损失函数一致，得证。</p>
+<p>预测函数$F_{m-1} (x)$的当前负梯度值，也可以说是伪响应$\tilde{y}$为：</p>
+<script type="math/tex; mode=display">\tilde{y}=-[\frac{∂L(F(x),y)}{∂F(x)}]_{F(x)=F_{m-1}(x)}=\frac{2y}{1+exp(2yF_{m-1}(x))}</script><p>我们仍然将回归树作为基学习器，进行线搜索得到最优叶子节点值：</p>
+<script type="math/tex; mode=display">γ_{m,j}=argmin_y\sum_{x∈R_{m,j}}log(1+(-2y(F_{m-1}(x)+γ)))</script><p>一看这个公式就知道计算量不是一般的大，我们用<a href="https://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF%E6%B3%95" target="_blank" rel="noopener">Newton-Raphson近似</a>，得到:</p>
+<script type="math/tex; mode=display">γ_{m,j}=\frac{\sum_{x∈R_{m,j}}\tilde{y}_i}{\sum_{x∈R_{m,j}}|\tilde{y}_i|(2-|\tilde{y}|)}</script><p>总结一下算法流程如下：</p>
 <ul>
 <li>1.　初始化：$F_0 (x)=argmix_ρ\sum_{i=1}^NL(y,ρ)$ ,$N$表示样本量</li>
 <li>2.　For $m=1$ to $M$ do：</li>
@@ -279,9 +313,13 @@
 <li>　　(d)　$F_m (x)=F_{m-1} (x)+\sum_{j=1}^Jγ_{m,j} I(x∈R_{m,j})$</li>
 <li>3.　end For </li>
 </ul>
-<p>最后，我们得到了预测函数$F_M(x)$，用来进行概率估计：<br>$$P(y=1|x)=p=\frac{e^{2F(x)}}{1+e^{2F(x)}}=\frac{1}{1+e^{-2F(x)}}$$<br>$$P(y=-1|x)=1-p=\frac{1}{1+e^{2F(x)}}$$<br>有了概率之后，我们可以对样本进行分类。</p>
-<h2 id="多元分类"><a href="#多元分类" class="headerlink" title="多元分类"></a>多元分类</h2><p>我们使用多分类log损失作为损失函数：<br>$$L(y,F)=-\sum_{k=1}^{K}y_klogp_k(x)$$<br>对应的概率$p_k(x)$为（就是softmax）：<br>$$p_k (x)=\frac{e^{F_k (x)}}{\sum_{l=1}^Ke^{F_l (x)}}$$<br>对于多分类问题，在构建基学习器时，我们要为每个类别k创建一棵回归树$F_k (x)，k=1,2,……，K$<br>$$\tilde{y}_{i,k}=y_{i,k}-p_{k,m-1} (x_i)$$<br>因此，每次迭代m，以概率角度来计算当前残差。<br>叶子节点值近似为：<br>$$γ_{m,j}=\frac{K-1}{K}\frac{\sum_{x∈R_{m,j}}\tilde{y}_i}{\sum_{x∈R_{m,j}}|\tilde{y}_i|(2-|\tilde{y}|)}$$</p>
-<h2 id="面经"><a href="#面经" class="headerlink" title="面经"></a>面经</h2><p>1、GBDT为什么是在拟合前面几轮的残差？请公式推导。<br>2、SVM为什么要比GBDT好？（这个问题有点奇怪，但是面试官真的是这么问的(微笑脸)，因为我简历里写了用SVM做分类，面试官就问为什么不用GBDT，SVM比GBDT好在哪里？……）这个问题我至今不知道答案，请大神赐教。<br>3、GBDT和LR的差别。(这个问题可以推广的，和AdaBoost、RF、XgBoost,etc的差别)<br>4、在你所知的算法中，哪个抗噪能力最强？哪个对采样不敏感？</p>
+<p>最后，我们得到了预测函数$F_M(x)$，用来进行概率估计：</p>
+<script type="math/tex; mode=display">P(y=1|x)=p=\frac{e^{2F(x)}}{1+e^{2F(x)}}=\frac{1}{1+e^{-2F(x)}}</script><script type="math/tex; mode=display">P(y=-1|x)=1-p=\frac{1}{1+e^{2F(x)}}</script><p>有了概率之后，我们可以对样本进行分类。</p>
+<h2 id="多元分类"><a href="#多元分类" class="headerlink" title="多元分类"></a>多元分类</h2><p>我们使用多分类log损失作为损失函数：</p>
+<script type="math/tex; mode=display">L(y,F)=-\sum_{k=1}^{K}y_klogp_k(x)</script><p>对应的概率$p_k(x)$为（就是softmax）：</p>
+<script type="math/tex; mode=display">p_k (x)=\frac{e^{F_k (x)}}{\sum_{l=1}^Ke^{F_l (x)}}</script><p>对于多分类问题，在构建基学习器时，我们要为每个类别k创建一棵回归树$F_k (x)，k=1,2,……，K$</p>
+<script type="math/tex; mode=display">\tilde{y}_{i,k}=y_{i,k}-p_{k,m-1} (x_i)</script><p>因此，每次迭代m，以概率角度来计算当前残差。<br>叶子节点值近似为：</p>
+<script type="math/tex; mode=display">γ_{m,j}=\frac{K-1}{K}\frac{\sum_{x∈R_{m,j}}\tilde{y}_i}{\sum_{x∈R_{m,j}}|\tilde{y}_i|(2-|\tilde{y}|)}</script><h2 id="面经"><a href="#面经" class="headerlink" title="面经"></a>面经</h2><p>1、GBDT为什么是在拟合前面几轮的残差？请公式推导。<br>2、SVM为什么要比GBDT好？（这个问题有点奇怪，但是面试官真的是这么问的(微笑脸)，因为我简历里写了用SVM做分类，面试官就问为什么不用GBDT，SVM比GBDT好在哪里？……）这个问题我至今不知道答案，请大神赐教。<br>3、GBDT和LR的差别。(这个问题可以推广的，和AdaBoost、RF、XgBoost,etc的差别)<br>4、在你所知的算法中，哪个抗噪能力最强？哪个对采样不敏感？</p>
 <p><br><br><br><br>作者 [Scorpio.Lu]<br>2017 年 12 月 13 日<br>转载请注明出处！</p>
 
             
