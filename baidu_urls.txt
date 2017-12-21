@@ -1,2 +1,8 @@
 https://louisscorpio.github.io/2017/12/13/GBDT入门详解/
 https://louisscorpio.github.io/2017/12/06/逍遥自在，厦门小众游攻略/
+https://louisscorpio.github.io/2017/12/05/二叉树算法/
+https://louisscorpio.github.io/2017/12/05/排序算法/
+https://louisscorpio.github.io/2017/12/05/二分查找/
+https://louisscorpio.github.io/2017/11/30/部署github后数学公式无法渲染/
+https://louisscorpio.github.io/2017/11/28/AdaBoost入门详解/
+https://louisscorpio.github.io/2017/11/28/代码实战之AdaBoost/
